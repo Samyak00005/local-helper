@@ -1,4 +1,5 @@
 import { HugeiconsIcon } from "@hugeicons/react";
+import { Link } from "react-router-dom";
 
 import {
   Location01Icon,
@@ -20,26 +21,32 @@ import {
 const popularServices = [
   {
     name: "Electrician",
+    slug: "electrician",
     icon: FlashIcon,
   },
   {
     name: "Plumber",
+    slug: "plumber",
     icon: DropletsIcon,
   },
   {
     name: "Carpenter",
+    slug: "carpenter",
     icon: HammerIcon,
   },
   {
     name: "Cleaning",
+    slug: "cleaning",
     icon: CleanIcon,
   },
   {
     name: "AC Repair",
+    slug: "ac-repair",
     icon: AirVentIcon,
   },
   {
     name: "Mechanic",
+    slug: "mechanic",
     icon: CarFrontIcon,
   },
 ];
@@ -66,8 +73,9 @@ const nearbyServices = [
 function HomePage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#111827]">
-      {/* ----- HEADER ----- */}
-
+      {/* =====================================================
+          HEADER
+      ====================================================== */}
       <header className="border-b border-[#E5E7EB] bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5">
           {/* Brand */}
@@ -104,8 +112,9 @@ function HomePage() {
         </div>
       </header>
 
-      {/* ----- HERO ----- */}
-
+      {/* =====================================================
+          HERO
+      ====================================================== */}
       <section className="bg-white px-4 pb-5 pt-4">
         <div className="mx-auto max-w-7xl">
           {/* Small label */}
@@ -155,8 +164,9 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ----- POPULAR SERVICES ----- */}
-
+      {/* =====================================================
+          POPULAR SERVICES
+      ====================================================== */}
       <section className="px-4 py-5">
         <div className="mx-auto max-w-7xl">
           <div className="mb-4 flex items-center justify-between">
@@ -170,8 +180,9 @@ function HomePage() {
               </p>
             </div>
 
-            <button
-              type="button"
+            {/* See All Services */}
+            <Link
+              to="/services"
               className="flex items-center gap-1 text-sm font-semibold text-[#15803D] transition hover:text-[#16A34A]"
             >
               See all
@@ -180,15 +191,15 @@ function HomePage() {
                 size={16}
                 strokeWidth={2}
               />
-            </button>
+            </Link>
           </div>
 
           {/* Services Grid */}
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
             {popularServices.map((service) => (
-              <button
-                key={service.name}
-                type="button"
+              <Link
+                key={service.slug}
+                to={`/services/${service.slug}`}
                 className="group flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-[#E5E7EB] bg-white px-2 py-4 transition active:scale-[0.98] hover:border-[#BBF7D0] hover:shadow-sm"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F1F5F9] text-[#374151] transition group-hover:bg-[#DCFCE7] group-hover:text-[#15803D]">
@@ -202,14 +213,15 @@ function HomePage() {
                 <span className="mt-2.5 text-center text-xs font-semibold leading-4 text-[#374151]">
                   {service.name}
                 </span>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ----- SERVICES NEAR YOU ----- */}
-
+      {/* =====================================================
+          SERVICES NEAR YOU
+      ====================================================== */}
       <section className="px-4 pb-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-4 flex items-center justify-between">
