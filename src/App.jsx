@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 
-import BottomNavBar from "./components/BottomNavBar";
 import AllServicesPage from "./pages/AllServicesPage";
+import BottomNavBar from "./components/BottomNavBar";
 import HomePage from "./pages/HomePage";
 import ServiceCategoryPage from "./pages/ServiceCategoryPage";
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen pb-20">
       <Routes>
         <Route path="/" element={<HomePage />} />
 
@@ -17,7 +17,7 @@ function App() {
       </Routes>
 
       <BottomNavBar />
-    </>
+    </div>
   );
 }
 
