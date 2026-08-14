@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useEffect, useState } from "react";
 
 import { Search02Icon } from "@hugeicons/core-free-icons";
 
@@ -23,7 +23,7 @@ function SearchBar({
   }, []);
 
   return (
-    <div className="h-14">
+    <div className="py-2">
       <div
         className={
           isScrolled
@@ -33,11 +33,11 @@ function SearchBar({
       >
         <div className="mx-auto max-w-7xl">
           <div
-            className={`flex min-h-14 items-center gap-3 rounded-4xl border border-gray-100 bg-white px-4 transition focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#DCFCE7] ${
+            className={`flex min-h-14 items-center gap-3 rounded-4xl border bg-white px-4 transition ${
               isScrolled
-                ? "shadow-[0_6px_20px_rgba(0,0,0,0.18)]"
-                : "shadow-none"
-            }`}
+                ? "border-[#e5e7eb1f] shadow-[0_6px_20px_rgba(0,0,0,0.18)]"
+                : "border-[#D1D5DB] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+            } focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#DCFCE7]`}
           >
             <HugeiconsIcon
               icon={Search02Icon}
