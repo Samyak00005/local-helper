@@ -1,20 +1,22 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router-dom";
 
+import providersData from "../data/providers.json";
+
 import {
+  AirVentIcon,
+  ArrowRight02Icon,
+  Call02Icon,
+  CarFrontIcon,
+  CheckmarkCircle01Icon,
+  CleanIcon,
+  DropletsIcon,
+  FlashIcon,
+  HammerIcon,
   Location01Icon,
   Menu01Icon,
   Search02Icon,
-  FlashIcon,
-  DropletsIcon,
-  HammerIcon,
-  CleanIcon,
-  AirVentIcon,
-  CarFrontIcon,
-  ArrowRight02Icon,
-  CheckmarkCircle01Icon,
   StarIcon,
-  Call02Icon,
   WhatsappIcon,
 } from "@hugeicons/core-free-icons";
 
@@ -51,25 +53,11 @@ const popularServices = [
   },
 ];
 
-const nearbyServices = [
-  {
-    name: "Raj Electrical Services",
-    category: "Electrician",
-    location: "Tukum, Chandrapur",
-    rating: "4.7",
-    reviews: 34,
-    verified: true,
-  },
-  {
-    name: "Suresh Plumbing Services",
-    category: "Plumber",
-    location: "Ramnagar, Chandrapur",
-    rating: "4.6",
-    reviews: 27,
-    verified: true,
-  },
-];
-
+const nearbyServices = Object.values(providersData)
+  .flat()
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 5);
+  
 function HomePage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#111827]">
@@ -219,9 +207,8 @@ function HomePage() {
         </div>
       </section>
 
-      {/* =====================================================
-          SERVICES NEAR YOU
-      ====================================================== */}
+      {/* ----- SERVICES NEAR YOU ----- */}
+
       <section className="px-4 pb-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-4 flex items-center justify-between">
@@ -251,18 +238,27 @@ function HomePage() {
           {/* Provider Cards */}
           <div className="space-y-3">
             {nearbyServices.map((service) => (
-              <article
-                key={service.name}
-                className="rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm"
+              <Link
+                key={service.id}
+                to={`/provider/${service.id}`}
+                className="block rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm transition hover:border-[#BBF7D0] hover:shadow-md"
               >
                 <div className="flex gap-3">
                   {/* Service Icon */}
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#DCFCE7] text-[#15803D]">
                     <HugeiconsIcon
                       icon={
-                        service.category === "Electrician"
+                        service.category === "electrician"
                           ? FlashIcon
-                          : DropletsIcon
+                          : service.category === "plumber"
+                            ? DropletsIcon
+                            : service.category === "carpenter"
+                              ? HammerIcon
+                              : service.category === "cleaning"
+                                ? CleanIcon
+                                : service.category === "ac-repair"
+                                  ? AirVentIcon
+                                  : CarFrontIcon
                       }
                       size={23}
                       strokeWidth={1.8}
@@ -278,7 +274,12 @@ function HomePage() {
                         </h3>
 
                         <p className="mt-0.5 text-xs text-[#6B7280]">
-                          {service.category} · {service.location}
+                          {service.category
+                            .replace("-", " ")
+                            .replace(/\b\w/g, (letter) =>
+                              letter.toUpperCase(),
+                            )}{" "}
+                          · {service.location}
                         </p>
                       </div>
 
@@ -341,7 +342,7 @@ function HomePage() {
                     WhatsApp
                   </button>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
