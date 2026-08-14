@@ -29,7 +29,7 @@ const serviceIcons = {
 function ServicesNearYou() {
   const nearbyServices = Object.values(providersData)
     .flat()
-    .sort(() => Math.random() - 0.5)
+    .sort(() => Math.random() - 0.3)
     .slice(0, 5);
 
   return (

@@ -1,6 +1,7 @@
 import { HugeiconsIcon } from "@hugeicons/react";
+import SearchBar from "./SearchBar";
 
-import { Location01Icon, Search02Icon } from "@hugeicons/core-free-icons";
+import { Location01Icon } from "@hugeicons/core-free-icons";
 
 function Hero() {
   return (
@@ -26,20 +27,7 @@ function Hero() {
         </p>
 
         {/* Search */}
-        <div className="mt-4 flex min-h-14 items-center gap-3 rounded-2xl border border-[#E5E7EB] bg-[#F8FAFC] px-4 shadow-sm transition focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#DCFCE7]">
-          <HugeiconsIcon
-            icon={Search02Icon}
-            size={21}
-            strokeWidth={2}
-            className="shrink-0 text-[#6B7280]"
-          />
-
-          <input
-            type="text"
-            placeholder="What service do you need?"
-            className="min-w-0 flex-1 bg-transparent text-sm font-medium text-[#111827] outline-none placeholder:text-[#9CA3AF]"
-          />
-        </div>
+        <SearchBar placeholder="Search services..." />
 
         {/* Quick Location */}
         <button
