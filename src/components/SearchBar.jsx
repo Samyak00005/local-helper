@@ -27,13 +27,13 @@ function SearchBar({
       <div
         className={
           isScrolled
-            ? "fixed left-0 right-0 top-0 z-50 px-4 pb-5 pt-5 transition"
+            ? "fixed left-0 right-0 top-0 z-50 px-6 pb-6 pt-6 transition"
             : ""
         }
       >
         <div className="mx-auto max-w-7xl">
           <div
-            className={`flex min-h-14 items-center gap-3 rounded-4xl border border-[#E5E7EB] bg-[#F8FAFC] px-4 transition focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#DCFCE7] ${
+            className={`flex min-h-14 items-center gap-3 rounded-4xl border border-gray-100 bg-white px-4 transition focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#DCFCE7] ${
               isScrolled
                 ? "shadow-[0_6px_20px_rgba(0,0,0,0.18)]"
                 : "shadow-none"

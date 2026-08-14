@@ -7,10 +7,10 @@ function Hero() {
   return (
     <section className="bg-white px-4 pb-5 pt-4">
       <div className="mx-auto max-w-7xl">
-        {/* Small Label */}
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#DCFCE7] px-3 py-1.5 text-xs font-semibold text-[#15803D]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#16A34A]" />
-          Local services around you
+        {/* Location Label */}
+        <div className="mb-3 flex w-fit items-center gap-2 rounded-full bg-[#DCFCE7] px-2 py-1.5 text-xs font-semibold text-[#15803D]">
+          <HugeiconsIcon icon={Location01Icon} size={13} strokeWidth={2} />
+          <span>Chandrapur</span>
         </div>
 
         {/* Heading */}
