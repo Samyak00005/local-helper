@@ -30,7 +30,7 @@ function ServicesNearYou() {
   const nearbyServices = Object.values(providersData)
     .flat()
     .sort(() => Math.random() - 0.3)
-    .slice(0, 5);
+    .slice(0, 3);
 
   return (
     <section className="px-4 pb-8">
@@ -59,11 +59,11 @@ function ServicesNearYou() {
         {/* Provider Cards */}
         <div className="space-y-3">
           {nearbyServices.map((service) => (
-            <Link
+            <article
               key={service.id}
-              to={`/provider/${service.id}`}
-              className="block rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm transition hover:border-[#BBF7D0] hover:shadow-md"
+              className="rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm transition hover:border-[#BBF7D0] hover:shadow-md"
             >
+              {/* Service Information */}
               <div className="flex gap-3">
                 {/* Service Icon */}
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#DCFCE7] text-[#15803D]">
@@ -127,15 +127,16 @@ function ServicesNearYou() {
 
               {/* Actions */}
               <div className="mt-4 grid grid-cols-2 gap-2">
+                {/* Call */}
                 <a
                   href={`tel:${service.phone}`}
-                  onClick={(event) => event.stopPropagation()}
                   className="flex h-10 items-center justify-center gap-2 rounded-xl bg-[#16A34A] text-sm font-semibold text-white transition hover:bg-[#15803D] active:scale-[0.98]"
                 >
                   <HugeiconsIcon icon={Call02Icon} size={17} strokeWidth={2} />
                   Call
                 </a>
 
+                {/* WhatsApp */}
                 <a
                   href={`https://wa.me/${service.whatsapp.replace(
                     /[^0-9]/g,
@@ -143,7 +144,6 @@ function ServicesNearYou() {
                   )}`}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={(event) => event.stopPropagation()}
                   className="flex h-10 items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] bg-white text-sm font-semibold text-[#374151] transition hover:bg-[#F1F5F9] active:scale-[0.98]"
                 >
                   <HugeiconsIcon
@@ -154,7 +154,7 @@ function ServicesNearYou() {
                   WhatsApp
                 </a>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       </div>
