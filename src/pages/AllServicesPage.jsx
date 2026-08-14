@@ -1,4 +1,5 @@
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -35,12 +36,18 @@ const serviceNames = {
 };
 
 function AllServicesPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const services = Object.keys(providersData).map((category) => ({
     slug: category,
     name: serviceNames[category] || category,
     icon: serviceIcons[category],
     providerCount: providersData[category]?.length || 0,
   }));
+
+  const filteredServices = services.filter((service) =>
+    service.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#111827]">
@@ -78,6 +85,8 @@ function AllServicesPage() {
 
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for a service..."
               className="min-w-0 flex-1 bg-transparent text-sm font-medium text-[#111827] outline-none placeholder:text-[#9CA3AF]"
             />
@@ -100,41 +109,53 @@ function AllServicesPage() {
           </div>
 
           {/* Services Grid */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {services.map((service) => (
-              <Link
-                key={service.slug}
-                to={`/services/${service.slug}`}
-                className="group rounded-2xl border border-[#E5E7EB] bg-white p-4 transition active:scale-[0.98] hover:border-[#BBF7D0] hover:shadow-sm"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F1F5F9] text-[#374151] transition group-hover:bg-[#DCFCE7] group-hover:text-[#15803D]">
+          {filteredServices.length > 0 ? (
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {filteredServices.map((service) => (
+                <Link
+                  key={service.slug}
+                  to={`/services/${service.slug}`}
+                  className="group rounded-2xl border border-[#E5E7EB] bg-white p-4 transition active:scale-[0.98] hover:border-[#BBF7D0] hover:shadow-sm"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F1F5F9] text-[#374151] transition group-hover:bg-[#DCFCE7] group-hover:text-[#15803D]">
+                      <HugeiconsIcon
+                        icon={service.icon}
+                        size={23}
+                        strokeWidth={1.8}
+                      />
+                    </div>
+
                     <HugeiconsIcon
-                      icon={service.icon}
-                      size={23}
-                      strokeWidth={1.8}
+                      icon={ArrowRight02Icon}
+                      size={17}
+                      strokeWidth={2}
+                      className="mt-1 text-[#9CA3AF] transition group-hover:translate-x-0.5 group-hover:text-[#15803D]"
                     />
                   </div>
 
-                  <HugeiconsIcon
-                    icon={ArrowRight02Icon}
-                    size={17}
-                    strokeWidth={2}
-                    className="mt-1 text-[#9CA3AF] transition group-hover:translate-x-0.5 group-hover:text-[#15803D]"
-                  />
-                </div>
+                  <h3 className="mt-4 text-sm font-semibold text-[#111827]">
+                    {service.name}
+                  </h3>
 
-                <h3 className="mt-4 text-sm font-semibold text-[#111827]">
-                  {service.name}
-                </h3>
+                  <p className="mt-1 text-xs text-[#6B7280]">
+                    {service.providerCount} local{" "}
+                    {service.providerCount === 1 ? "provider" : "providers"}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-[#E5E7EB] bg-white px-5 py-10 text-center">
+              <h3 className="text-sm font-semibold text-[#111827]">
+                No services found
+              </h3>
 
-                <p className="mt-1 text-xs text-[#6B7280]">
-                  {service.providerCount} local{" "}
-                  {service.providerCount === 1 ? "provider" : "providers"}
-                </p>
-              </Link>
-            ))}
-          </div>
+              <p className="mt-1 text-xs text-[#6B7280]">
+                Try searching for another service.
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </div>

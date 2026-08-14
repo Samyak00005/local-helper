@@ -1,20 +1,21 @@
-import { Link, useParams } from "react-router-dom";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { Link, useParams } from "react-router-dom";
+
+import SearchBar from "../components/SearchBar";
 
 import {
-  ArrowLeft01Icon,
-  Search02Icon,
-  FlashIcon,
-  DropletsIcon,
-  HammerIcon,
-  CleanIcon,
   AirVentIcon,
+  ArrowLeft01Icon,
+  Call02Icon,
   CarFrontIcon,
   CheckmarkCircle01Icon,
-  StarIcon,
-  Call02Icon,
-  WhatsappIcon,
+  CleanIcon,
+  DropletsIcon,
+  FlashIcon,
+  HammerIcon,
   Location01Icon,
+  StarIcon,
+  WhatsappIcon,
 } from "@hugeicons/core-free-icons";
 
 import providersData from "../data/providers.json";
@@ -161,23 +162,9 @@ function ServiceCategoryPage() {
             </div>
           </div>
 
-          {/* =================================================
-              SEARCH
-          ================================================== */}
-          <div className="mt-5 flex h-13 items-center gap-3 rounded-2xl border border-[#E5E7EB] bg-[#F8FAFC] px-4 transition focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#DCFCE7]">
-            <HugeiconsIcon
-              icon={Search02Icon}
-              size={20}
-              strokeWidth={2}
-              className="shrink-0 text-[#6B7280]"
-            />
+          {/* ----- SEARCH ----- */}
 
-            <input
-              type="text"
-              placeholder={`Search ${currentCategory.singular.toLowerCase()}...`}
-              className="min-w-0 flex-1 bg-transparent text-sm font-medium text-[#111827] outline-none placeholder:text-[#9CA3AF]"
-            />
-          </div>
+          <SearchBar />
         </div>
       </section>
 

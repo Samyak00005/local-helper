@@ -3,7 +3,11 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Search02Icon } from "@hugeicons/core-free-icons";
 
-function SearchBar({ placeholder = "What service do you need?" }) {
+function SearchBar({
+  placeholder = "What service do you need?",
+  value = "",
+  onChange,
+}) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -44,6 +48,8 @@ function SearchBar({ placeholder = "What service do you need?" }) {
 
             <input
               type="text"
+              value={value}
+              onChange={(event) => onChange?.(event.target.value)}
               placeholder={placeholder}
               className="min-w-0 flex-1 bg-transparent text-sm font-medium text-[#111827] outline-none placeholder:text-[#9CA3AF]"
             />

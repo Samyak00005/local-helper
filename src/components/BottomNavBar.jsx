@@ -15,7 +15,7 @@ const navItems = [
     icon: Home01Icon,
   },
   {
-    name: "Services",
+    name: "All Services",
     path: "/services",
     icon: GridViewIcon,
   },
