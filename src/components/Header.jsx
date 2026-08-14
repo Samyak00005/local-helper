@@ -1,6 +1,7 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Location01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -8,10 +9,11 @@ function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#16A34A] text-white shadow-sm">
-            <span className="text-lg font-bold">L</span>
-          </div>
-
+          <Link to="/">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#16A34A] text-white shadow-sm">
+              <span className="text-lg font-bold">L</span>
+            </div>
+          </Link>
           <div>
             <p className="text-[15px] font-bold leading-none tracking-tight text-[#111827]">
               Local Helper
