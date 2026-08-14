@@ -5,6 +5,7 @@ import BottomNavBar from "./components/BottomNavBar";
 import HomePage from "./pages/HomePage";
 import SavedPage from "./pages/SavedPage";
 import ServiceCategoryPage from "./pages/ServiceCategoryPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/services/:category" element={<ServiceCategoryPage />} />
 
         <Route path="/saved" element={<SavedPage />} />
+
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
 
       <BottomNavBar />
