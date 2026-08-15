@@ -1,6 +1,6 @@
 import EmergencyServices from "../components/EmergencyServices";
 import Header from "../components/Header";
-import HeroSection from "../components/HeroSection";
+import HeroSection from "../components/homepage/HeroSection";
 import PopularServices from "../components/popularservices/PopularServices";
 
 import ServicesNearYou from "../components/servicesnearyou/ServicesNearYou";

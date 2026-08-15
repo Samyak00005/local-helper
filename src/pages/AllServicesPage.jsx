@@ -111,9 +111,7 @@ function AllServicesPage() {
     }));
   }, []);
 
-  /* -------------------------------------------------------
-     FILTER
-  ------------------------------------------------------- */
+  /* ----- FILTER----- */
 
   const filteredServices = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -129,9 +127,7 @@ function AllServicesPage() {
     );
   }, [services, searchQuery]);
 
-  /* -------------------------------------------------------
-     CLEAR SEARCH
-  ------------------------------------------------------- */
+  /* ----- CLEAR SEARCH ----- */
 
   const clearSearch = () => {
     setSearchQuery("");
@@ -139,10 +135,6 @@ function AllServicesPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#111827]">
-      {/* ===================================================
-          HEADER
-      =================================================== */}
-
       <Header />
 
       {/* ===================================================
