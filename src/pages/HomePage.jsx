@@ -1,9 +1,9 @@
-import EmergencyServices from "../components/EmergencyServices";
 import Header from "../components/Header";
-import HeroSection from "../components/homepage/HeroSection";
-import PopularServices from "../components/popularservices/PopularServices";
 
-import ServicesNearYou from "../components/servicesnearyou/ServicesNearYou";
+import EmergencyServices from "../components/homepage/EmergencyServices";
+import HeroSection from "../components/homepage/herosection/HeroSection";
+import PopularServices from "../components/homepage/PopularServices";
+import ServicesNearYou from "../components/homepage/ServicesNearYou";
 
 function HomePage() {
   return (

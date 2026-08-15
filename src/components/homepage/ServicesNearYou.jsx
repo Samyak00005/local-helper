@@ -18,10 +18,6 @@ import {
 
 import providersData from "../../data/providers.json";
 
-/* =========================================================
-   SERVICE ICONS
-========================================================= */
-
 const serviceIcons = {
   electrician: FlashIcon,
   plumber: DropletsIcon,
@@ -30,10 +26,6 @@ const serviceIcons = {
   "ac-repair": AirVentIcon,
   mechanic: CarFrontIcon,
 };
-
-/* =========================================================
-   COMPONENT
-========================================================= */
 
 function ServicesNearYou() {
   const nearbyServices = Object.values(providersData)
@@ -44,9 +36,7 @@ function ServicesNearYou() {
   return (
     <section className="bg-[#F7FAF8] px-4 pb-10 pt-2 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        {/* =================================================
-            HEADER
-        ================================================= */}
+        {/* ----- HEADER ----- */}
 
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
@@ -100,9 +90,7 @@ function ServicesNearYou() {
           </Link>
         </div>
 
-        {/* =================================================
-            PROVIDER CARDS
-        ================================================= */}
+        {/* ----- PROVIDER CARDS ----- */}
 
         <div className="space-y-4">
           {nearbyServices.map((service) => {
@@ -131,9 +119,7 @@ function ServicesNearYou() {
                   sm:p-5
                 "
               >
-                {/* =================================================
-                    PROVIDER INFO
-                ================================================= */}
+                {/* ----- PROVIDER INFO ----- */}
 
                 <div className="flex gap-3">
                   {/* ICON */}
