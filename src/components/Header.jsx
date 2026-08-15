@@ -3,7 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import MobileSidebar from "./Sidebar";
+import MobileSidebar from "./sidebar/Sidebar";
 
 function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
