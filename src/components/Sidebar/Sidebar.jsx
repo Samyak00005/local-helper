@@ -30,9 +30,7 @@ function Sidebar({ isOpen, onClose }) {
         `}
       />
 
-      {/* =====================================================
-          SIDEBAR
-      ===================================================== */}
+      {/* ----- SIDEBAR ----- */}
 
       <aside
         className={`
@@ -54,9 +52,7 @@ function Sidebar({ isOpen, onClose }) {
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        {/* =====================================================
-            SCROLLABLE SIDEBAR CONTENT
-        ===================================================== */}
+        {/* ------ SCROLLABLE SIDEBAR CONTENT -----*/}
 
         <div className="min-h-0 flex-1 overflow-y-auto">
           {/* ----- PROFILE ----- */}
