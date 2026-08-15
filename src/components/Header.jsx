@@ -1,30 +1,43 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Menu01Icon } from "@hugeicons/core-free-icons";
+
 import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header className="border-b border-[#E5E7EB] bg-white">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-2">
-        {/* Logo */}
-        <Link to="/">
-          <div className="flex h-16 w-26 items-center justify-center overflow-hidden rounded-xl">
+    <header className="relative z-50 border-b border-white/10 bg-[#087A3F]">
+      <div className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* ================= LOGO ================= */}
+
+        <Link to="/" className="flex items-center" aria-label="Local Sewa Home">
+          <div className="flex h-14 w-36 items-center justify-center overflow-hidden">
             <img
               src="/logo 2.png"
-              alt="Local Helper"
+              alt="Local Sewa"
               className="h-full w-full object-contain"
             />
           </div>
         </Link>
 
-        {/* Menu */}
+        {/* ================= MENU ================= */}
+
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E5E7EB] bg-white text-[#374151] transition hover:bg-[#F1F5F9]"
+          className="
+            flex h-11 w-11 items-center justify-center
+            rounded-2xl
+            border border-white/20
+            bg-white/10
+            text-white
+            backdrop-blur-md
+            transition
+            hover:bg-white/20
+            active:scale-95
+          "
           aria-label="Open menu"
         >
-          <HugeiconsIcon icon={Menu01Icon} size={21} strokeWidth={2} />
+          <HugeiconsIcon icon={Menu01Icon} size={23} strokeWidth={2} />
         </button>
       </div>
     </header>

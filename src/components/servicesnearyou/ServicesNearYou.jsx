@@ -13,9 +13,14 @@ import {
   HammerIcon,
   StarIcon,
   WhatsappIcon,
+  Location01Icon,
 } from "@hugeicons/core-free-icons";
 
 import providersData from "../../data/providers.json";
+
+/* =========================================================
+   SERVICE ICONS
+========================================================= */
 
 const serviceIcons = {
   electrician: FlashIcon,
@@ -26,6 +31,10 @@ const serviceIcons = {
   mechanic: CarFrontIcon,
 };
 
+/* =========================================================
+   COMPONENT
+========================================================= */
+
 function ServicesNearYou() {
   const nearbyServices = Object.values(providersData)
     .flat()
@@ -33,130 +42,303 @@ function ServicesNearYou() {
     .slice(0, 3);
 
   return (
-    <section className="px-4 pb-8">
+    <section className="bg-[#F7FAF8] px-4 pb-10 pt-2 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        {/* Section Header */}
-        <div className="mb-4 flex items-center justify-between">
+        {/* =================================================
+            HEADER
+        ================================================= */}
+
+        <div className="mb-5 flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-lg font-bold tracking-tight text-[#111827]">
+            <p
+              className="
+                mb-1
+                text-[10px]
+                font-bold
+                uppercase
+                tracking-[0.16em]
+                text-[#16A34A]
+                sm:text-xs
+              "
+            >
+              Nearby
+            </p>
+
+            <h2
+              className="
+                text-xl
+                font-extrabold
+                tracking-[-0.035em]
+                text-[#10231A]
+                sm:text-2xl
+              "
+            >
               Services near you
             </h2>
 
-            <p className="mt-1 text-xs text-[#6B7280]">
+            <p className="mt-1 text-xs text-[#6B7280] sm:text-sm">
               Local providers you can contact directly
             </p>
           </div>
 
           <Link
             to="/services"
-            className="flex items-center gap-1 text-sm font-semibold text-[#15803D] transition hover:text-[#16A34A]"
+            className="
+              flex
+              shrink-0
+              items-center
+              gap-1
+              text-sm
+              font-bold
+              text-[#15803D]
+              transition
+              hover:text-[#16A34A]
+            "
           >
             See all
-            <HugeiconsIcon icon={ArrowRight02Icon} size={16} strokeWidth={2} />
+            <HugeiconsIcon icon={ArrowRight02Icon} size={17} strokeWidth={2} />
           </Link>
         </div>
 
-        {/* Provider Cards */}
-        <div className="space-y-3">
-          {nearbyServices.map((service) => (
-            <article
-              key={service.id}
-              className="rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-sm transition hover:border-[#BBF7D0] hover:shadow-md"
-            >
-              {/* Service Information */}
-              <div className="flex gap-3">
-                {/* Service Icon */}
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#DCFCE7] text-[#15803D]">
-                  <HugeiconsIcon
-                    icon={serviceIcons[service.category] || FlashIcon}
-                    size={23}
-                    strokeWidth={1.8}
-                  />
-                </div>
+        {/* =================================================
+            PROVIDER CARDS
+        ================================================= */}
 
-                {/* Provider Details */}
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <h3 className="truncate font-semibold text-[#111827]">
-                        {service.name}
-                      </h3>
+        <div className="space-y-4">
+          {nearbyServices.map((service) => {
+            const categoryName = service.category
+              ? service.category
+                  .replace("-", " ")
+                  .replace(/\b\w/g, (letter) => letter.toUpperCase())
+              : "Service";
 
-                      <p className="mt-0.5 text-xs text-[#6B7280]">
-                        {service.category
-                          .replace("-", " ")
-                          .replace(/\b\w/g, (letter) =>
-                            letter.toUpperCase(),
-                          )}{" "}
-                        · {service.location}
-                      </p>
+            return (
+              <article
+                key={service.id}
+                className="
+                  group
+                  overflow-hidden
+                  rounded-[22px]
+                  border
+                  border-[#E3ECE6]
+                  bg-white
+                  p-4
+                  shadow-[0_4px_18px_rgba(15,23,42,0.04)]
+                  transition
+                  duration-300
+                  hover:border-[#BBF7D0]
+                  hover:shadow-[0_12px_30px_rgba(22,163,74,0.08)]
+                  sm:p-5
+                "
+              >
+                {/* =================================================
+                    PROVIDER INFO
+                ================================================= */}
+
+                <div className="flex gap-3">
+                  {/* ICON */}
+
+                  <div
+                    className="
+                      flex
+                      h-14
+                      w-14
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-[17px]
+                      bg-[#DCFCE7]
+                      text-[#15803D]
+                      transition
+                      group-hover:bg-[#BBF7D0]
+                    "
+                  >
+                    <HugeiconsIcon
+                      icon={serviceIcons[service.category] || FlashIcon}
+                      size={25}
+                      strokeWidth={1.8}
+                    />
+                  </div>
+
+                  {/* DETAILS */}
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <h3
+                          className="
+                            truncate
+                            text-[15px]
+                            font-extrabold
+                            text-[#10231A]
+                            sm:text-base
+                          "
+                        >
+                          {service.name}
+                        </h3>
+
+                        <div className="mt-1 flex items-center gap-1.5 text-xs text-[#6B7280]">
+                          <span>{categoryName}</span>
+
+                          <span className="text-[#CBD5E1]">•</span>
+
+                          <HugeiconsIcon
+                            icon={Location01Icon}
+                            size={13}
+                            strokeWidth={2}
+                          />
+
+                          <span className="truncate">{service.location}</span>
+                        </div>
+                      </div>
+
+                      {/* VERIFIED */}
+
+                      {service.verified && (
+                        <div
+                          className="
+                            flex
+                            shrink-0
+                            items-center
+                            gap-1
+                            rounded-full
+                            bg-[#ECFDF3]
+                            px-2
+                            py-1
+                            text-[10px]
+                            font-bold
+                            text-[#15803D]
+                          "
+                        >
+                          <HugeiconsIcon
+                            icon={CheckmarkCircle01Icon}
+                            size={13}
+                            strokeWidth={2}
+                          />
+                          Verified
+                        </div>
+                      )}
                     </div>
 
-                    {/* Verified */}
-                    {service.verified && (
-                      <div className="flex shrink-0 items-center gap-1 rounded-full bg-[#DCFCE7] px-2 py-1 text-[10px] font-semibold text-[#15803D]">
-                        <HugeiconsIcon
-                          icon={CheckmarkCircle01Icon}
-                          size={13}
-                          strokeWidth={2}
-                        />
-                        Verified
-                      </div>
-                    )}
-                  </div>
+                    {/* =================================================
+                        RATING
+                    ================================================= */}
 
-                  {/* Rating */}
-                  <div className="mt-2 flex items-center gap-1 text-xs">
-                    <HugeiconsIcon
-                      icon={StarIcon}
-                      size={14}
-                      strokeWidth={2}
-                      className="text-[#F59E0B]"
-                    />
+                    <div className="mt-2 flex items-center gap-1 text-xs">
+                      <HugeiconsIcon
+                        icon={StarIcon}
+                        size={14}
+                        strokeWidth={2}
+                        className="text-[#F59E0B]"
+                      />
 
-                    <span className="font-semibold text-[#374151]">
-                      {service.rating}
-                    </span>
+                      <span className="font-bold text-[#334155]">
+                        {service.rating}
+                      </span>
 
-                    <span className="text-[#9CA3AF]">
-                      ({service.reviews} reviews)
-                    </span>
+                      <span className="text-[#9CA3AF]">
+                        ({service.reviews} reviews)
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Actions */}
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                {/* Call */}
-                <a
-                  href={`tel:${service.phone}`}
-                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-[#16A34A] text-sm font-semibold text-white transition hover:bg-[#15803D] active:scale-[0.98]"
-                >
-                  <HugeiconsIcon icon={Call02Icon} size={17} strokeWidth={2} />
-                  Call
-                </a>
+                {/* =================================================
+                    ACTIONS
+                ================================================= */}
 
-                {/* WhatsApp */}
-                <a
-                  href={`https://wa.me/${service.whatsapp.replace(
-                    /[^0-9]/g,
-                    "",
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex h-10 items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] bg-white text-sm font-semibold text-[#374151] transition hover:bg-[#F1F5F9] active:scale-[0.98]"
-                >
-                  <HugeiconsIcon
-                    icon={WhatsappIcon}
-                    size={17}
-                    strokeWidth={2}
-                  />
-                  WhatsApp
-                </a>
-              </div>
-            </article>
-          ))}
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  {/* CALL */}
+
+                  <a
+                    href={`tel:${service.phone}`}
+                    className="
+                      flex
+                      h-11
+                      items-center
+                      justify-center
+                      gap-2
+                      rounded-[13px]
+                      bg-[#16A34A]
+                      text-sm
+                      font-bold
+                      text-white
+                      shadow-sm
+                      transition
+                      hover:bg-[#15803D]
+                      active:scale-[0.98]
+                    "
+                  >
+                    <HugeiconsIcon
+                      icon={Call02Icon}
+                      size={17}
+                      strokeWidth={2}
+                    />
+                    Call
+                  </a>
+
+                  {/* WHATSAPP */}
+
+                  <a
+                    href={`https://wa.me/${String(
+                      service.whatsapp || "",
+                    ).replace(/[^0-9]/g, "")}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="
+                      flex
+                      h-11
+                      items-center
+                      justify-center
+                      gap-2
+                      rounded-[13px]
+                      border
+                      border-[#BBF7D0]
+                      bg-[#F0FDF4]
+                      text-sm
+                      font-bold
+                      text-[#15803D]
+                      transition
+                      hover:bg-[#DCFCE7]
+                      active:scale-[0.98]
+                    "
+                  >
+                    <HugeiconsIcon
+                      icon={WhatsappIcon}
+                      size={17}
+                      strokeWidth={2}
+                    />
+                    WhatsApp
+                  </a>
+                </div>
+              </article>
+            );
+          })}
         </div>
+
+        {/* =================================================
+            EMPTY STATE
+        ================================================= */}
+
+        {nearbyServices.length === 0 && (
+          <div
+            className="
+              rounded-[22px]
+              border
+              border-[#E3ECE6]
+              bg-white
+              px-5
+              py-12
+              text-center
+            "
+          >
+            <h3 className="font-bold text-[#10231A]">No providers nearby</h3>
+
+            <p className="mt-1 text-sm text-[#6B7280]">
+              We will show local providers here when available.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

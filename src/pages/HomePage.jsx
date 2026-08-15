@@ -1,3 +1,4 @@
+import EmergencyServices from "../components/EmergencyServices";
 import Header from "../components/Header";
 import HeroSection from "../components/HeroSection";
 import PopularServices from "../components/popularservices/PopularServices";
@@ -12,6 +13,8 @@ function HomePage() {
       <HeroSection />
 
       <PopularServices />
+
+      <EmergencyServices />
 
       <ServicesNearYou />
     </div>
