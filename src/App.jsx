@@ -6,10 +6,13 @@ import HomePage from "./pages/HomePage";
 import SavedPage from "./pages/SavedPage";
 import ServiceCategoryPage from "./pages/ServiceCategoryPage";
 import ProfilePage from "./pages/ProfilePage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <div className="min-h-screen pb-24 md:pb-0">
+      <ScrollToTop />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
 
