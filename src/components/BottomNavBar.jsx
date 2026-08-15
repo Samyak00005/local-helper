@@ -104,7 +104,7 @@ function BottomNavBar() {
                   <HugeiconsIcon
                     icon={item.icon}
                     size={21}
-                    strokeWidth={isActive ? 2.2 : 1.7}
+                    strokeWidth={isActive ? 3 : 1.5}
                   />
                 </div>
 
