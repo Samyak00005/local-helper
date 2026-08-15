@@ -12,10 +12,10 @@ import {
   FlashIcon,
   HammerIcon,
   Search02Icon,
-  Cancel01Icon,
 } from "@hugeicons/core-free-icons";
 
 import Header from "../components/Header";
+import SearchBar from "../components/SearchBar";
 import providersData from "../data/providers.json";
 
 /* =========================================================
@@ -100,9 +100,11 @@ function AllServicesPage() {
       name: serviceNames[category] || category,
       icon: serviceIcons[category],
       providerCount: providersData[category]?.length || 0,
+
       description:
         serviceDescriptions[category] ||
         "Find trusted local professionals for this service.",
+
       style: serviceStyles[category] || {
         icon: "bg-slate-100 text-slate-600 group-hover:bg-slate-200",
       },
@@ -179,66 +181,16 @@ function AllServicesPage() {
             </p>
           </div>
 
-          {/* Search */}
+          {/* =================================================
+              SEARCH
+          ================================================= */}
 
           <div className="mt-6 max-w-2xl">
-            <div
-              className="
-                flex min-h-[56px] items-center gap-3
-                rounded-2xl border border-[#E5E7EB]
-                bg-[#F8FAFC] px-4
-                shadow-[0_1px_2px_rgba(0,0,0,0.03)]
-                transition-all
-                focus-within:border-[#16A34A]
-                focus-within:bg-white
-                focus-within:ring-4
-                focus-within:ring-[#DCFCE7]
-              "
-            >
-              <HugeiconsIcon
-                icon={Search02Icon}
-                size={21}
-                strokeWidth={2}
-                className="shrink-0 text-[#6B7280]"
-              />
-
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="What service do you need?"
-                className="
-                  min-w-0 flex-1
-                  bg-transparent
-                  text-sm font-medium
-                  text-[#111827]
-                  outline-none
-                  placeholder:text-[#9CA3AF]
-                "
-              />
-
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={clearSearch}
-                  aria-label="Clear search"
-                  className="
-                    flex h-8 w-8 shrink-0 items-center
-                    justify-center rounded-lg
-                    text-[#9CA3AF]
-                    transition
-                    hover:bg-[#E5E7EB]
-                    hover:text-[#374151]
-                  "
-                >
-                  <HugeiconsIcon
-                    icon={Cancel01Icon}
-                    size={17}
-                    strokeWidth={2}
-                  />
-                </button>
-              )}
-            </div>
+            <SearchBar
+              placeholder="What service do you need?"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+            />
 
             {/* Search Result Count */}
 
@@ -255,7 +207,7 @@ function AllServicesPage() {
                 <button
                   type="button"
                   onClick={clearSearch}
-                  className="font-semibold text-[#15803D] hover:text-[#166534]"
+                  className="font-semibold text-[#15803D] transition hover:text-[#166534]"
                 >
                   Clear search
                 </button>
@@ -265,7 +217,9 @@ function AllServicesPage() {
         </div>
       </section>
 
-      {/* ----- SERVICES ----- */}
+      {/* ===================================================
+          SERVICES
+      =================================================== */}
 
       <main className="px-4 py-7 sm:px-6 lg:px-8 lg:py-9">
         <div className="mx-auto max-w-7xl">
@@ -283,7 +237,9 @@ function AllServicesPage() {
             </div>
           </div>
 
-          {/* ----- SERVICES GRID----- */}
+          {/* =================================================
+              SERVICES GRID
+          ================================================= */}
 
           {filteredServices.length > 0 ? (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
@@ -292,10 +248,16 @@ function AllServicesPage() {
                   key={service.slug}
                   to={`/services/${service.slug}`}
                   className="
-                    group relative overflow-hidden
-                    rounded-2xl border border-[#E5E7EB]
-                    bg-white p-4
-                    transition-all duration-200
+                    group
+                    relative
+                    overflow-hidden
+                    rounded-2xl
+                    border
+                    border-[#E5E7EB]
+                    bg-white
+                    p-4
+                    transition-all
+                    duration-200
                     hover:-translate-y-0.5
                     hover:border-[#BBF7D0]
                     hover:shadow-[0_8px_30px_rgba(15,23,42,0.06)]
@@ -303,14 +265,19 @@ function AllServicesPage() {
                     sm:p-5
                   "
                 >
-                  {/* Green hover line */}
+                  {/* Green Hover Line */}
 
                   <div
                     className="
-                      absolute inset-x-0 top-0 h-[2px]
-                      origin-left scale-x-0
+                      absolute
+                      inset-x-0
+                      top-0
+                      h-[2px]
+                      origin-left
+                      scale-x-0
                       bg-[#16A34A]
-                      transition-transform duration-200
+                      transition-transform
+                      duration-200
                       group-hover:scale-x-100
                     "
                   />
@@ -322,10 +289,15 @@ function AllServicesPage() {
 
                     <div
                       className={`
-                        flex h-12 w-12 shrink-0
-                        items-center justify-center
+                        flex
+                        h-12
+                        w-12
+                        shrink-0
+                        items-center
+                        justify-center
                         rounded-xl
-                        transition-colors duration-200
+                        transition-colors
+                        duration-200
                         ${service.style.icon}
                       `}
                     >
@@ -340,11 +312,16 @@ function AllServicesPage() {
 
                     <div
                       className="
-                        flex h-8 w-8 items-center justify-center
+                        flex
+                        h-8
+                        w-8
+                        items-center
+                        justify-center
                         rounded-lg
                         bg-[#F8FAFC]
                         text-[#9CA3AF]
-                        transition-all duration-200
+                        transition-all
+                        duration-200
                         group-hover:bg-[#F0FDF4]
                         group-hover:text-[#15803D]
                       "
@@ -417,9 +394,15 @@ function AllServicesPage() {
                 type="button"
                 onClick={clearSearch}
                 className="
-                  mt-5 inline-flex h-10 items-center
-                  rounded-xl bg-[#15803D]
-                  px-5 text-sm font-semibold
+                  mt-5
+                  inline-flex
+                  h-10
+                  items-center
+                  rounded-xl
+                  bg-[#15803D]
+                  px-5
+                  text-sm
+                  font-semibold
                   text-white
                   shadow-sm
                   transition
@@ -442,7 +425,7 @@ function AllServicesPage() {
         <section className="px-4 pb-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="relative overflow-hidden rounded-2xl bg-[#15803D] px-5 py-6 sm:px-8 sm:py-7">
-              {/* Decorative circles */}
+              {/* Decorative Circles */}
 
               <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-white/10" />
 
@@ -465,10 +448,16 @@ function AllServicesPage() {
                 <Link
                   to="/"
                   className="
-                    mt-5 inline-flex h-10
-                    items-center gap-2
-                    rounded-xl bg-white
-                    px-4 text-sm font-semibold
+                    mt-5
+                    inline-flex
+                    h-10
+                    items-center
+                    gap-2
+                    rounded-xl
+                    bg-white
+                    px-4
+                    text-sm
+                    font-semibold
                     text-[#15803D]
                     transition
                     hover:bg-[#F0FDF4]
