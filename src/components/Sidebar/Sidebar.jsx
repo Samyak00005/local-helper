@@ -6,16 +6,10 @@ import SidebarNavigation from "./SidebarNavigation";
 import SidebarProfile from "./SidebarProfile";
 import SidebarRoleSwitcher from "./SidebarRoleSwitcher";
 
-/* =========================================================
-   MOBILE SIDEBAR
-========================================================= */
-
-function MobileSidebar({ isOpen, onClose }) {
+function Sidebar({ isOpen, onClose }) {
   return createPortal(
     <>
-      {/* =====================================================
-          BACKDROP
-      ===================================================== */}
+      {/* ----- BACKDROP ----- */}
 
       <div
         onClick={onClose}
@@ -104,4 +98,4 @@ function MobileSidebar({ isOpen, onClose }) {
   );
 }
 
-export default MobileSidebar;
+export default Sidebar;
