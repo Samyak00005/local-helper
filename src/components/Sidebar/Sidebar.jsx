@@ -4,13 +4,18 @@ import SidebarLocation from "./SidebarLocation";
 import SidebarLogout from "./SidebarLogout";
 import SidebarNavigation from "./SidebarNavigation";
 import SidebarProfile from "./SidebarProfile";
+import SidebarRoleSwitcher from "./SidebarRoleSwitcher";
 
-/* ------ COMPONENT ----- */
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
 
 function MobileSidebar({ isOpen, onClose }) {
   return createPortal(
     <>
-      {/* ----- BACKDROP ----- */}
+      {/* =====================================================
+          BACKDROP
+      ===================================================== */}
 
       <div
         onClick={onClose}
@@ -31,7 +36,9 @@ function MobileSidebar({ isOpen, onClose }) {
         `}
       />
 
-      {/* ----- SIDEBAR ----- */}
+      {/* =====================================================
+          SIDEBAR
+      ===================================================== */}
 
       <aside
         className={`
@@ -53,24 +60,43 @@ function MobileSidebar({ isOpen, onClose }) {
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        {/* ----- PROFILE ----- */}
+        {/* =====================================================
+            SCROLLABLE SIDEBAR CONTENT
+        ===================================================== */}
 
-        <SidebarProfile onClose={onClose} />
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          {/* ----- PROFILE ----- */}
 
-        {/* ----- LOCATION ----- */}
+          <SidebarProfile onClose={onClose} />
 
-        <SidebarLocation />
+          {/* ----- LOCATION ----- */}
 
-        {/* ----- NAVIGATION ----- */}
+          <SidebarLocation />
 
-        <div className="flex-1 overflow-y-auto">
+          {/* ----- NAVIGATION ----- */}
+
           <SidebarNavigation onClose={onClose} />
         </div>
 
-        {/* ----- LOGOUT ----- */}
+        {/* ----- BOTTOM ACTIONS----- */}
 
-        <div className="shrink-0 bg-[#FAFCFB] pb-3 pt-1">
-          <SidebarLogout onClose={onClose} />
+        <div className="shrink-0 bg-[#FAFCFB]">
+          {/* ----- ROLE SWITCHER ----- */}
+
+          <SidebarRoleSwitcher />
+
+          {/* ----- LOGOUT ----- */}
+
+          <div
+            className="
+              border-t
+              border-[#E5EDE8]
+              pb-3
+              pt-1
+            "
+          >
+            <SidebarLogout onClose={onClose} />
+          </div>
         </div>
       </aside>
     </>,
