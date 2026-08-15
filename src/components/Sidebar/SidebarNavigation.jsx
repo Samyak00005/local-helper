@@ -1,14 +1,14 @@
-
 import {
-    Alert02Icon,
-    Bookmark01Icon,
-    File02Icon,
-    HelpCircleIcon,
-    Message01Icon,
-    Notification01Icon,
-    Settings02Icon,
-    Shield01Icon,
-    UserAdd01Icon,
+  Alert02Icon,
+  Bookmark01Icon,
+  File02Icon,
+  HelpCircleIcon,
+  Home01Icon,
+  Message01Icon,
+  Notification01Icon,
+  Settings02Icon,
+  Shield01Icon,
+  UserAdd01Icon,
 } from "@hugeicons/core-free-icons";
 
 import SidebarMenuItem from "./SidebarMenuItem";
@@ -17,6 +17,11 @@ import SidebarSection from "./SidebarSection";
 /* ----- QUICK ACCESS ----- */
 
 const quickAccessItems = [
+  {
+    name: "Home",
+    path: "/",
+    icon: Home01Icon,
+  },
   {
     name: "Saved Services",
     path: "/saved",
