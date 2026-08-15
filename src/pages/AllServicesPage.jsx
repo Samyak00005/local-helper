@@ -265,9 +265,7 @@ function AllServicesPage() {
         </div>
       </section>
 
-      {/* ===================================================
-          SERVICES
-      =================================================== */}
+      {/* ----- SERVICES ----- */}
 
       <main className="px-4 py-7 sm:px-6 lg:px-8 lg:py-9">
         <div className="mx-auto max-w-7xl">
@@ -285,9 +283,7 @@ function AllServicesPage() {
             </div>
           </div>
 
-          {/* =================================================
-              SERVICES GRID
-          ================================================= */}
+          {/* ----- SERVICES GRID----- */}
 
           {filteredServices.length > 0 ? (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">

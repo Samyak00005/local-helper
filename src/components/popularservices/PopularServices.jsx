@@ -1,5 +1,4 @@
 import { HugeiconsIcon } from "@hugeicons/react";
-
 import { Link } from "react-router-dom";
 
 import {
@@ -143,17 +142,17 @@ function PopularServices() {
                   group
                   relative
                   flex
-                  min-h-[118px]
+                  min-h-[96px]
                   flex-col
                   items-center
                   justify-center
                   overflow-hidden
-                  rounded-[20px]
+                  rounded-[18px]
                   border
                   border-[#E5EDE8]
                   bg-[#FBFEFC]
                   px-2
-                  py-4
+                  py-3
                   transition
                   duration-300
                   hover:-translate-y-1
@@ -213,7 +212,7 @@ function PopularServices() {
                 <span
                   className="
                     relative
-                    mt-3
+                    mt-2
                     text-center
                     text-xs
                     font-bold
