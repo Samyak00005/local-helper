@@ -3,9 +3,10 @@ import { NavLink } from "react-router-dom";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import {
-  Home01Icon,
-  GridViewIcon,
   Bookmark01Icon,
+  Calendar03Icon,
+  GridViewIcon,
+  Home01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
 
@@ -19,6 +20,11 @@ const navItems = [
     name: "All Services",
     path: "/services",
     icon: GridViewIcon,
+  },
+  {
+    name: "Bookings",
+    path: "/bookings",
+    icon: Calendar03Icon,
   },
   {
     name: "Saved",
@@ -44,7 +50,7 @@ function BottomNavBar() {
         border-t
         border-[#E5EDE8]
         bg-white/95
-        px-3
+        px-2
         pb-[env(safe-area-inset-bottom)]
         pt-2
         shadow-[0_-8px_25px_rgba(15,23,42,0.06)]
@@ -60,12 +66,13 @@ function BottomNavBar() {
             className={({ isActive }) =>
               `
                 flex
-                min-w-[68px]
+                min-w-[58px]
+                flex-1
                 flex-col
                 items-center
                 gap-1
                 rounded-2xl
-                px-2
+                px-1
                 py-1.5
                 text-[10px]
                 font-semibold
@@ -80,7 +87,7 @@ function BottomNavBar() {
           >
             {({ isActive }) => (
               <>
-                {/* Icon background for active */}
+                {/* ----- ICON BACKGROUND ----- */}
 
                 <div
                   className={`
@@ -100,6 +107,8 @@ function BottomNavBar() {
                     strokeWidth={isActive ? 2.2 : 1.7}
                   />
                 </div>
+
+                {/* ----- LABEL ----- */}
 
                 <span>{item.name}</span>
               </>

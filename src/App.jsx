@@ -8,6 +8,7 @@ import NearbyServicesPage from "./pages/NearbyServicesPage";
 import ProfilePage from "./pages/ProfilePage";
 import SavedPage from "./pages/SavedPage";
 import ServiceCategoryPage from "./pages/ServiceCategoryPage";
+import BookingsPage from "./pages/BookingsPage";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
 
         <Route path="/nearby" element={<NearbyServicesPage />} />
 
+        <Route path="/bookings" element={<BookingsPage />} />
+        
         <Route path="/saved" element={<SavedPage />} />
 
         <Route path="/profile" element={<ProfilePage />} />

@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <header className="relative z-50 border-b border-white/10 bg-[#087A3F]">
-      <div className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* ================= LOGO ================= */}
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* ----- LOGO ----- */}
 
         <Link to="/" className="flex items-center" aria-label="Local Sewa Home">
-          <div className="flex h-14 w-36 items-center justify-center overflow-hidden">
+          <div className="flex h-13 w-30 items-center justify-center overflow-hidden">
             <img
               src="/logo 2.png"
               alt="Local Sewa"
@@ -20,7 +20,7 @@ function Header() {
           </div>
         </Link>
 
-        {/* ================= MENU ================= */}
+        {/* ----- MENU ----- */}
 
         <button
           type="button"

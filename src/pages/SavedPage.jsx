@@ -37,26 +37,49 @@ function SavedPage() {
     <div className="min-h-screen bg-[#F8FAFC] pb-20 text-[#111827]">
       <Header />
 
-      {/* Page Header */}
-      <section className="bg-white px-4 pb-6 pt-4">
-        <div className="mx-auto max-w-7xl">
+      {/* ----- PAGE HEADER ----- */}
+      <header className="border-b border-[#E5EDE8] bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+          {/* ----- BACK ----- */}
+
           <Link
             to="/"
-            className="mb-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#6B7280] transition hover:text-[#15803D]"
+            className="
+              inline-flex
+              items-center
+              gap-1.5
+              text-sm
+              font-semibold
+              text-[#6B7280]
+              transition
+              hover:text-[#15803D]
+            "
           >
             <HugeiconsIcon icon={ArrowLeft01Icon} size={17} strokeWidth={2} />
             Home
           </Link>
 
-          <h1 className="text-[28px] font-bold leading-tight tracking-[-0.03em] text-[#111827]">
-            Saved
-          </h1>
+          {/* ----- TITLE ----- */}
 
-          <p className="mt-2 text-sm leading-6 text-[#6B7280]">
-            Your saved local providers
-          </p>
+          <div className="mt-4">
+            <h1
+              className="
+                text-3xl
+                font-extrabold
+                tracking-[-0.035em]
+                text-[#10231A]
+                sm:text-3xl
+              "
+            >
+              Saved
+            </h1>
+
+            <p className="mt-1 text-sm text-[#6B7280]">
+              Your saved local providers{" "}
+            </p>
+          </div>
         </div>
-      </section>
+      </header>
 
       {/* Saved Providers */}
       <main className="px-4 py-4">

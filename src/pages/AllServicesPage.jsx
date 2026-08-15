@@ -137,32 +137,34 @@ function AllServicesPage() {
     <div className="min-h-screen bg-[#F8FAFC] text-[#111827]">
       <Header />
 
-      {/* ===================================================
-          PAGE HERO / HEADER
-      =================================================== */}
+      {/* ----- PAGE HERO / HEADER ----- */}
 
       <section className="border-b border-[#E5E7EB] bg-white">
         <div className="mx-auto max-w-7xl px-4 pb-7 pt-4 sm:px-6 lg:px-8">
-          {/* Back Link */}
-
+          {/* ----- BACK ----- */}
           <Link
             to="/"
-            className="group mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#6B7280] transition-colors hover:text-[#15803D]"
+            className="
+              inline-flex
+              items-center
+              gap-1.5
+              pt-1
+              pb-5
+              text-sm
+              font-semibold
+              text-[#6B7280]
+              transition
+              hover:text-[#15803D]
+            "
           >
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F8FAFC] transition group-hover:bg-[#DCFCE7]">
-              <HugeiconsIcon icon={ArrowLeft01Icon} size={16} strokeWidth={2} />
-            </span>
+            <HugeiconsIcon icon={ArrowLeft01Icon} size={17} strokeWidth={2} />
             Home
           </Link>
 
           {/* Heading */}
 
           <div className="max-w-2xl">
-            <div className="mb-3 inline-flex items-center rounded-full border border-[#BBF7D0] bg-[#F0FDF4] px-3 py-1 text-xs font-semibold text-[#15803D]">
-              Local Services
-            </div>
-
-            <h1 className="text-[30px] font-bold leading-[1.1] tracking-[-0.035em] text-[#111827] sm:text-4xl lg:text-[42px]">
+            <h1 className="text-3xl font-extrabold leading-[1.1] tracking-[-0.035em] text-[#111827] sm:text-4xl lg:text-[42px]">
               Find the right service
               <span className="text-[#16A34A]"> near you.</span>
             </h1>
@@ -173,9 +175,7 @@ function AllServicesPage() {
             </p>
           </div>
 
-          {/* =================================================
-              SEARCH
-          ================================================= */}
+          {/* ----- SEARCH ----- */}
 
           <div className="mt-6 max-w-2xl">
             <SearchBar
@@ -209,9 +209,7 @@ function AllServicesPage() {
         </div>
       </section>
 
-      {/* ===================================================
-          SERVICES
-      =================================================== */}
+      {/* ----- SERVICES ----- */}
 
       <main className="px-4 py-7 sm:px-6 lg:px-8 lg:py-9">
         <div className="mx-auto max-w-7xl">
