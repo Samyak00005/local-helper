@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 
-import AllServicesPage from "./pages/AllServicesPage";
 import BottomNavBar from "./components/BottomNavBar";
+import ScrollToTop from "./components/ScrollToTop";
+import AllServicesPage from "./pages/AllServicesPage";
 import HomePage from "./pages/HomePage";
+import NearbyServicesPage from "./pages/NearbyServicesPage";
+import ProfilePage from "./pages/ProfilePage";
 import SavedPage from "./pages/SavedPage";
 import ServiceCategoryPage from "./pages/ServiceCategoryPage";
-import ProfilePage from "./pages/ProfilePage";
-import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path="/services" element={<AllServicesPage />} />
 
         <Route path="/services/:category" element={<ServiceCategoryPage />} />
+
+        <Route path="/nearby" element={<NearbyServicesPage />} />
 
         <Route path="/saved" element={<SavedPage />} />
 

@@ -72,7 +72,7 @@ function ServicesNearYou() {
           </div>
 
           <Link
-            to="/services"
+            to="/nearby"
             className="
               flex
               shrink-0

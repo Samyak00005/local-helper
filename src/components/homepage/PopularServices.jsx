@@ -13,9 +13,7 @@ import {
 
 import providersData from "../../data/providers.json";
 
-/* =========================================================
-   SERVICE ICONS
-========================================================= */
+/* ----- SERVICE ICONS ----- */
 
 const serviceIcons = {
   electrician: FlashIcon,
@@ -26,9 +24,7 @@ const serviceIcons = {
   mechanic: CarFrontIcon,
 };
 
-/* =========================================================
-   SERVICE NAMES
-========================================================= */
+/* ----- SERVICE NAMES ----- */
 
 const serviceNames = {
   electrician: "Electrician",
@@ -69,9 +65,7 @@ function PopularServices() {
             sm:p-7
           "
         >
-          {/* =================================================
-              SECTION HEADER
-          ================================================= */}
+          {/* ----- SECTION HEADER ----- */}
 
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
