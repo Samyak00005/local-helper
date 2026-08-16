@@ -1,16 +1,53 @@
-# React + Vite
+# Local Sewa
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Local Sewa is a local services platform designed to connect customers with nearby service providers.
 
-Currently, two official plugins are available:
+The platform provides a simple way for customers to discover local services, find nearby service providers, manage bookings, save services, and access emergency services.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Customer
 
-## Expanding the ESLint configuration
+- Customer login and registration
+- Browse local services
+- Search for services
+- Find nearby services
+- Book services
+- Manage bookings
+- Save services
+- View profile
+- Messages
+- Notifications
+- Emergency services
+- Location-based services
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Service Provider
+
+- Service provider login and registration
+- Manage services
+- Manage bookings
+- Manage profile
+- Switch between Customer and Service Provider modes
+
+### Authentication
+
+Local Sewa provides separate authentication flows for both user types:
+
+- Customer Login
+- Customer Registration
+- Service Provider Login
+- Service Provider Registration
+
+### User Interface
+
+- Mobile-first design
+- Responsive layouts
+- Component-based architecture
+- Modern green-themed UI
+- Mobile sidebar navigation
+- Bottom navigation
+- Profile section
+- Location section
+- Role switcher
