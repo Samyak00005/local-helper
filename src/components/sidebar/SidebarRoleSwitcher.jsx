@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import { Briefcase01Icon, UserIcon } from "@hugeicons/core-free-icons";
+import {
+  Briefcase01Icon,
+  UserIcon,
+} from "@hugeicons/core-free-icons";
 
 /* ----- ROLES ----- */
 
@@ -24,7 +28,26 @@ const roles = [
 ========================================================= */
 
 function SidebarRoleSwitcher() {
+  const navigate = useNavigate();
+
   const [activeRole, setActiveRole] = useState("client");
+
+  /* =======================================================
+     ROLE SWITCH
+  ======================================================= */
+
+  const handleRoleSwitch = (roleId) => {
+    setActiveRole(roleId);
+
+    if (roleId === "provider") {
+      navigate("/provider/dashboard");
+      return;
+    }
+
+    if (roleId === "client") {
+      navigate("/");
+    }
+  };
 
   return (
     <div className="px-4 py-3">
@@ -64,7 +87,7 @@ function SidebarRoleSwitcher() {
             <button
               key={role.id}
               type="button"
-              onClick={() => setActiveRole(role.id)}
+              onClick={() => handleRoleSwitch(role.id)}
               className={`
                 flex
                 items-center
@@ -77,6 +100,7 @@ function SidebarRoleSwitcher() {
                 font-semibold
                 transition-all
                 duration-200
+
                 ${
                   isActive
                     ? "bg-white text-[#15803D] shadow-sm"
