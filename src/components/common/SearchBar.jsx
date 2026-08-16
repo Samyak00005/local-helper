@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useEffect, useState } from "react";
 
 import { Search02Icon } from "@hugeicons/core-free-icons";
 

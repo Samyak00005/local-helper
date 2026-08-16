@@ -11,7 +11,7 @@ import {
   HammerIcon,
 } from "@hugeicons/core-free-icons";
 
-import providersData from "../../data/providers.json";
+import providersData from "../../../data/providers.json";
 
 /* ----- SERVICE ICONS ----- */
 
