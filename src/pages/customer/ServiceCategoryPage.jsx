@@ -1,7 +1,7 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link, useParams } from "react-router-dom";
 
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../../components/common/SearchBar";
 
 import {
   AirVentIcon,
@@ -18,7 +18,7 @@ import {
   WhatsappIcon,
 } from "@hugeicons/core-free-icons";
 
-import providersData from "../data/providers.json";
+import providersData from "../../data/providers.json";
 
 const categoryData = {
   electrician: {

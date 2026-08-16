@@ -12,8 +12,8 @@ import {
   Location01Icon,
 } from "@hugeicons/core-free-icons";
 
-import Header from "../components/Header";
-import providersData from "../data/providers.json";
+import Header from "../../components/common/Header";
+import providersData from "../../data/providers.json";
 
 function SavedPage() {
   const [savedProviders, setSavedProviders] = useState([]);

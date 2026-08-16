@@ -13,7 +13,7 @@ import {
   StarIcon,
 } from "@hugeicons/core-free-icons";
 
-import Header from "../components/Header";
+import Header from "../../components/common/Header";
 
 /* ----- PAST BOOKINGS DATA ----- */
 

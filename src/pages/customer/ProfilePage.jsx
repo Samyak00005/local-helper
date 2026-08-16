@@ -1,9 +1,9 @@
-import Header from "../components/Header";
+import Header from "../../components/common/Header";
 
-import ProfileHeader from "../components/profile/ProfileHeader";
-import ProfileInfo from "../components/profile/ProfileInfo";
-import ProfileActions from "../components/profile/ProfileActions";
-import ProfileAbout from "../components/profile/ProfileAbout";
+import ProfileAbout from "../../components/customer/profile/ProfileAbout";
+import ProfileActions from "../../components/customer/profile/ProfileActions";
+import ProfileHeader from "../../components/customer/profile/ProfileHeader";
+import ProfileInfo from "../../components/customer/profile/ProfileInfo";
 
 function ProfilePage() {
   return (

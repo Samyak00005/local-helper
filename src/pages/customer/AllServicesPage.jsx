@@ -14,13 +14,9 @@ import {
   Search02Icon,
 } from "@hugeicons/core-free-icons";
 
-import Header from "../components/Header";
-import SearchBar from "../components/SearchBar";
-import providersData from "../data/providers.json";
-
-/* =========================================================
-   SERVICE CONFIG
-========================================================= */
+import Header from "../../components/common/Header";
+import SearchBar from "../../components/common/SearchBar";
+import providersData from "../../data/providers.json";
 
 const serviceIcons = {
   electrician: FlashIcon,

@@ -16,7 +16,7 @@ import {
   Location01Icon,
 } from "@hugeicons/core-free-icons";
 
-import providersData from "../../data/providers.json";
+import providersData from "../../../data/providers.json";
 
 const serviceIcons = {
   electrician: FlashIcon,
