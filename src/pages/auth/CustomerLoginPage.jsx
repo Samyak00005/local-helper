@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -24,8 +21,7 @@ import {
 ========================================================= */
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "http://localhost:5000";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 function CustomerLoginPage() {
   const navigate = useNavigate();
@@ -34,23 +30,17 @@ function CustomerLoginPage() {
      FORM STATE
   ======================================================= */
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [phone, setPhone] =
-    useState("");
+  const [phone, setPhone] = useState("");
 
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
-  const [successMessage, setSuccessMessage] =
-    useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   /* =======================================================
      PHONE NORMALIZER
@@ -62,9 +52,7 @@ function CustomerLoginPage() {
       .slice(0, 15);
   };
 
-  /* =======================================================
-     LOGIN
-  ======================================================= */
+  /* ----- LOGIN ----- */
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -76,47 +64,34 @@ function CustomerLoginPage() {
     setError("");
     setSuccessMessage("");
 
-    const cleanPhone =
-      normalizePhone(phone);
+    const cleanPhone = normalizePhone(phone);
 
-    const cleanPassword =
-      password.trim();
+    const cleanPassword = password.trim();
 
     /* =====================================================
        FRONTEND VALIDATION
     ===================================================== */
 
     if (!cleanPhone) {
-      setError(
-        "Please enter your mobile number.",
-      );
+      setError("Please enter your mobile number.");
 
       return;
     }
 
-    if (
-      cleanPhone.length < 10 ||
-      cleanPhone.length > 15
-    ) {
-      setError(
-        "Please enter a valid mobile number.",
-      );
+    if (cleanPhone.length < 10 || cleanPhone.length > 15) {
+      setError("Please enter a valid mobile number.");
 
       return;
     }
 
     if (!cleanPassword) {
-      setError(
-        "Please enter your password.",
-      );
+      setError("Please enter your password.");
 
       return;
     }
 
     if (cleanPassword.length < 6) {
-      setError(
-        "Password must be at least 6 characters.",
-      );
+      setError("Password must be at least 6 characters.");
 
       return;
     }
@@ -129,42 +104,30 @@ function CustomerLoginPage() {
          LOGIN API
       =================================================== */
 
-      const loginResponse =
-        await fetch(
-          `${API_BASE_URL}/api/auth/login`,
-          {
-            method: "POST",
+      const loginResponse = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
 
-            headers: {
-              "Content-Type":
-                "application/json",
+        headers: {
+          "Content-Type": "application/json",
 
-              Accept:
-                "application/json",
-            },
+          Accept: "application/json",
+        },
 
-            body: JSON.stringify({
-              phone: cleanPhone,
-              password: cleanPassword,
-            }),
-          },
-        );
+        body: JSON.stringify({
+          phone: cleanPhone,
+          password: cleanPassword,
+        }),
+      });
 
       let loginData = null;
 
       try {
-        loginData =
-          await loginResponse.json();
+        loginData = await loginResponse.json();
       } catch {
-        throw new Error(
-          "Invalid response received from server.",
-        );
+        throw new Error("Invalid response received from server.");
       }
 
-      if (
-        !loginResponse.ok ||
-        !loginData?.success
-      ) {
+      if (!loginResponse.ok || !loginData?.success) {
         throw new Error(
           loginData?.message ||
             "Login failed. Please check your mobile number and password.",
@@ -175,13 +138,10 @@ function CustomerLoginPage() {
          CHECK TOKEN
       =================================================== */
 
-      const token =
-        loginData?.token;
+      const token = loginData?.token;
 
       if (!token) {
-        throw new Error(
-          "Authentication token was not received.",
-        );
+        throw new Error("Authentication token was not received.");
       }
 
       /* ===================================================
@@ -189,93 +149,53 @@ function CustomerLoginPage() {
          VERIFY TOKEN USING /ME
       =================================================== */
 
-      const meResponse =
-        await fetch(
-          `${API_BASE_URL}/api/auth/me`,
-          {
-            method: "GET",
+      const meResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
+        method: "GET",
 
-            headers: {
-              Accept:
-                "application/json",
+        headers: {
+          Accept: "application/json",
 
-              Authorization:
-                `Bearer ${token}`,
-            },
-          },
-        );
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       let meData = null;
 
       try {
-        meData =
-          await meResponse.json();
+        meData = await meResponse.json();
       } catch {
-        throw new Error(
-          "Unable to verify login session.",
-        );
+        throw new Error("Unable to verify login session.");
       }
 
-      if (
-        !meResponse.ok ||
-        !meData?.success ||
-        !meData?.user
-      ) {
-        throw new Error(
-          meData?.message ||
-            "Unable to verify your account.",
-        );
+      if (!meResponse.ok || !meData?.success || !meData?.user) {
+        throw new Error(meData?.message || "Unable to verify your account.");
       }
 
       /* ===================================================
          CUSTOMER ROLE CHECK
       =================================================== */
 
-      const roles =
-        Array.isArray(
-          meData.user.roles,
-        )
-          ? meData.user.roles
-          : [];
+      const roles = Array.isArray(meData.user.roles) ? meData.user.roles : [];
 
-      if (
-        !roles.includes(
-          "CUSTOMER",
-        )
-      ) {
-        throw new Error(
-          "This account does not have customer access.",
-        );
+      if (!roles.includes("CUSTOMER")) {
+        throw new Error("This account does not have customer access.");
       }
 
       /* ===================================================
          SAVE AUTH DATA
       =================================================== */
 
-      localStorage.setItem(
-        "local_sewa_token",
-        token,
-      );
+      localStorage.setItem("local_sewa_token", token);
 
-      localStorage.setItem(
-        "local_sewa_user",
-        JSON.stringify(
-          meData.user,
-        ),
-      );
+      localStorage.setItem("local_sewa_user", JSON.stringify(meData.user));
 
-      localStorage.setItem(
-        "local_sewa_active_role",
-        "CUSTOMER",
-      );
+      localStorage.setItem("local_sewa_active_role", "CUSTOMER");
 
       /* ===================================================
          SUCCESS
       =================================================== */
 
-      setSuccessMessage(
-        `Welcome back, ${meData.user.full_name}!`,
-      );
+      setSuccessMessage(`Welcome back, ${meData.user.full_name}!`);
 
       /*
        * Small delay so success message
@@ -283,23 +203,14 @@ function CustomerLoginPage() {
        */
 
       setTimeout(() => {
-        navigate(
-          "/",
-          {
-            replace: true,
-          },
-        );
+        navigate("/", {
+          replace: true,
+        });
       }, 500);
     } catch (error) {
-      console.error(
-        "CUSTOMER LOGIN ERROR:",
-        error,
-      );
+      console.error("CUSTOMER LOGIN ERROR:", error);
 
-      setError(
-        error?.message ||
-          "Unable to login. Please try again.",
-      );
+      setError(error?.message || "Unable to login. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -371,7 +282,6 @@ function CustomerLoginPage() {
         "
       >
         <div className="w-full">
-
           {/* =================================================
               BACK
           ================================================= */}
@@ -390,12 +300,7 @@ function CustomerLoginPage() {
               hover:text-[#15803D]
             "
           >
-            <HugeiconsIcon
-              icon={ArrowLeft01Icon}
-              size={16}
-              strokeWidth={1.8}
-            />
-
+            <HugeiconsIcon icon={ArrowLeft01Icon} size={16} strokeWidth={1.8} />
             Choose account type
           </Link>
 
@@ -452,11 +357,7 @@ function CustomerLoginPage() {
                   text-[#16A34A]
                 "
               >
-                <HugeiconsIcon
-                  icon={UserIcon}
-                  size={24}
-                  strokeWidth={1.8}
-                />
+                <HugeiconsIcon icon={UserIcon} size={24} strokeWidth={1.8} />
               </div>
 
               <p
@@ -603,11 +504,7 @@ function CustomerLoginPage() {
                     value={phone}
                     disabled={loading}
                     onChange={(event) => {
-                      setPhone(
-                        normalizePhone(
-                          event.target.value,
-                        ),
-                      );
+                      setPhone(normalizePhone(event.target.value));
 
                       if (error) {
                         setError("");
@@ -705,19 +602,13 @@ function CustomerLoginPage() {
 
                   <input
                     id="customer-login-password"
-                    type={
-                      showPassword
-                        ? "text"
-                        : "password"
-                    }
+                    type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
                     placeholder="Enter your password"
                     value={password}
                     disabled={loading}
                     onChange={(event) => {
-                      setPassword(
-                        event.target.value,
-                      );
+                      setPassword(event.target.value);
 
                       if (error) {
                         setError("");
@@ -740,12 +631,7 @@ function CustomerLoginPage() {
                   <button
                     type="button"
                     disabled={loading}
-                    onClick={() =>
-                      setShowPassword(
-                        (previous) =>
-                          !previous,
-                      )
-                    }
+                    onClick={() => setShowPassword((previous) => !previous)}
                     className="
                       text-[#94A3B8]
                       hover:text-[#16A34A]
@@ -753,17 +639,11 @@ function CustomerLoginPage() {
                       disabled:opacity-50
                     "
                     aria-label={
-                      showPassword
-                        ? "Hide password"
-                        : "Show password"
+                      showPassword ? "Hide password" : "Show password"
                     }
                   >
                     <HugeiconsIcon
-                      icon={
-                        showPassword
-                          ? EyeOffIcon
-                          : EyeIcon
-                      }
+                      icon={showPassword ? EyeOffIcon : EyeIcon}
                       size={18}
                       strokeWidth={1.7}
                     />
@@ -812,13 +692,11 @@ function CustomerLoginPage() {
                         border-t-white
                       "
                     />
-
                     Logging in...
                   </>
                 ) : (
                   <>
                     Login as Customer
-
                     <HugeiconsIcon
                       icon={ArrowRight02Icon}
                       size={17}
@@ -845,7 +723,6 @@ function CustomerLoginPage() {
             >
               <p className="text-xs text-[#64748B]">
                 Don't have a customer account?{" "}
-
                 <Link
                   to="/auth/customer/register"
                   className="

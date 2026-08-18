@@ -1,12 +1,6 @@
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -24,77 +18,52 @@ import {
 ========================================================= */
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "http://localhost:5000";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 /* =========================================================
    PAGE
 ========================================================= */
 
 function ProviderRegisterPage() {
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
   /* =======================================================
      STATE
   ======================================================= */
 
-  const [user, setUser] =
-    useState(null);
+  const [user, setUser] = useState(null);
 
-  const [
-    categories,
-    setCategories,
-  ] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  const [
-    pageLoading,
-    setPageLoading,
-  ] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
 
-  const [
-    submitting,
-    setSubmitting,
-  ] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const [
-    needsLogin,
-    setNeedsLogin,
-  ] = useState(false);
+  const [needsLogin, setNeedsLogin] = useState(false);
 
-  const [
-    alreadyProvider,
-    setAlreadyProvider,
-  ] = useState(false);
+  const [alreadyProvider, setAlreadyProvider] = useState(false);
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
-  const [
-    successMessage,
-    setSuccessMessage,
-  ] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const [form, setForm] =
-    useState({
-      business_name: "",
-      business_description: "",
-      category: "",
-      experience_years: "",
-      whatsapp: "",
-      alternate_phone: "",
-      business_email: "",
-      home_service: true,
-      shop_service: false,
-    });
+  const [form, setForm] = useState({
+    business_name: "",
+    business_description: "",
+    category: "",
+    experience_years: "",
+    whatsapp: "",
+    alternate_phone: "",
+    business_email: "",
+    home_service: true,
+    shop_service: false,
+  });
 
   /* =======================================================
      NORMALIZE PHONE
   ======================================================= */
 
-  const normalizePhone = (
-    value,
-  ) => {
+  const normalizePhone = (value) => {
     return String(value || "")
       .replace(/\D/g, "")
       .slice(0, 15);
@@ -107,219 +76,146 @@ function ProviderRegisterPage() {
   useEffect(() => {
     let cancelled = false;
 
-    const loadPage =
-      async () => {
-        try {
-          setPageLoading(true);
-          setError("");
+    const loadPage = async () => {
+      try {
+        setPageLoading(true);
+        setError("");
 
-          const token =
-            localStorage.getItem(
-              "local_sewa_token",
-            );
+        const token = localStorage.getItem("local_sewa_token");
 
-          /* ===============================================
+        /* ===============================================
              CUSTOMER MUST LOGIN FIRST
           =============================================== */
 
-          if (!token) {
-            if (!cancelled) {
-              setNeedsLogin(true);
-              setPageLoading(false);
-            }
-
-            return;
+        if (!token) {
+          if (!cancelled) {
+            setNeedsLogin(true);
+            setPageLoading(false);
           }
 
-          /* ===============================================
+          return;
+        }
+
+        /* ===============================================
              GET CURRENT USER
           =============================================== */
 
-          const meResponse =
-            await fetch(
-              `${API_BASE_URL}/api/auth/me`,
-              {
-                method: "GET",
+        const meResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
+          method: "GET",
 
-                headers: {
-                  Accept:
-                    "application/json",
+          headers: {
+            Accept: "application/json",
 
-                  Authorization:
-                    `Bearer ${token}`,
-                },
-              },
-            );
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-          const meData =
-            await meResponse.json();
+        const meData = await meResponse.json();
 
-          if (
-            !meResponse.ok ||
-            !meData?.success ||
-            !meData?.user
-          ) {
-            localStorage.removeItem(
-              "local_sewa_token",
-            );
+        if (!meResponse.ok || !meData?.success || !meData?.user) {
+          localStorage.removeItem("local_sewa_token");
 
-            localStorage.removeItem(
-              "local_sewa_user",
-            );
+          localStorage.removeItem("local_sewa_user");
 
-            localStorage.removeItem(
-              "local_sewa_active_role",
-            );
+          localStorage.removeItem("local_sewa_active_role");
 
-            if (!cancelled) {
-              setNeedsLogin(true);
-              setPageLoading(false);
-            }
-
-            return;
+          if (!cancelled) {
+            setNeedsLogin(true);
+            setPageLoading(false);
           }
 
-          const currentUser =
-            meData.user;
+          return;
+        }
 
-          const roles =
-            Array.isArray(
-              currentUser.roles,
-            )
-              ? currentUser.roles
-              : [];
+        const currentUser = meData.user;
 
-          /* ===============================================
+        const roles = Array.isArray(currentUser.roles) ? currentUser.roles : [];
+
+        /* ===============================================
              ALREADY PROVIDER
           =============================================== */
 
-          if (
-            roles.includes(
-              "PROVIDER",
-            )
-          ) {
-            if (!cancelled) {
-              setUser(
-                currentUser,
-              );
+        if (roles.includes("PROVIDER")) {
+          if (!cancelled) {
+            setUser(currentUser);
 
-              setAlreadyProvider(
-                true,
-              );
+            setAlreadyProvider(true);
 
-              setPageLoading(
-                false,
-              );
-            }
-
-            return;
+            setPageLoading(false);
           }
 
-          /* ===============================================
+          return;
+        }
+
+        /* ===============================================
              CUSTOMER ROLE REQUIRED
           =============================================== */
 
-          if (
-            !roles.includes(
-              "CUSTOMER",
-            )
-          ) {
-            if (!cancelled) {
-              setError(
-                "A customer account is required before becoming a provider.",
-              );
-
-              setNeedsLogin(
-                true,
-              );
-
-              setPageLoading(
-                false,
-              );
-            }
-
-            return;
-          }
-
+        if (!roles.includes("CUSTOMER")) {
           if (!cancelled) {
-            setUser(
-              currentUser,
+            setError(
+              "A customer account is required before becoming a provider.",
             );
 
-            setForm(
-              (previous) => ({
-                ...previous,
+            setNeedsLogin(true);
 
-                whatsapp:
-                  currentUser.phone ||
-                  "",
-
-                business_email:
-                  currentUser.email ||
-                  "",
-              }),
-            );
+            setPageLoading(false);
           }
 
-          /* ===============================================
+          return;
+        }
+
+        if (!cancelled) {
+          setUser(currentUser);
+
+          setForm((previous) => ({
+            ...previous,
+
+            whatsapp: currentUser.phone || "",
+
+            business_email: currentUser.email || "",
+          }));
+        }
+
+        /* ===============================================
              LOAD CATEGORIES
           =============================================== */
 
-          const categoryResponse =
-            await fetch(
-              `${API_BASE_URL}/api/categories`,
-              {
-                headers: {
-                  Accept:
-                    "application/json",
-                },
-              },
-            );
+        const categoryResponse = await fetch(`${API_BASE_URL}/api/categories`, {
+          headers: {
+            Accept: "application/json",
+          },
+        });
 
-          const categoryData =
-            await categoryResponse.json();
+        const categoryData = await categoryResponse.json();
 
-          if (
-            !categoryResponse.ok ||
-            !categoryData?.success
-          ) {
-            throw new Error(
-              categoryData?.message ||
-                "Unable to load service categories.",
-            );
-          }
-
-          if (!cancelled) {
-            setCategories(
-              Array.isArray(
-                categoryData.categories,
-              )
-                ? categoryData.categories
-                : [],
-            );
-          }
-        } catch (
-          loadError
-        ) {
-          console.error(
-            "BECOME PROVIDER PAGE ERROR:",
-            loadError,
+        if (!categoryResponse.ok || !categoryData?.success) {
+          throw new Error(
+            categoryData?.message || "Unable to load service categories.",
           );
-
-          if (!cancelled) {
-            setError(
-              loadError?.message ||
-                "Unable to load provider registration.",
-            );
-          }
-        } finally {
-          if (!cancelled) {
-            setPageLoading(
-              false,
-            );
-          }
         }
-      };
+
+        if (!cancelled) {
+          setCategories(
+            Array.isArray(categoryData.categories)
+              ? categoryData.categories
+              : [],
+          );
+        }
+      } catch (loadError) {
+        console.error("BECOME PROVIDER PAGE ERROR:", loadError);
+
+        if (!cancelled) {
+          setError(
+            loadError?.message || "Unable to load provider registration.",
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setPageLoading(false);
+        }
+      }
+    };
 
     loadPage();
 
@@ -332,361 +228,222 @@ function ProviderRegisterPage() {
      NORMAL INPUT CHANGE
   ======================================================= */
 
-  const handleChange =
-    (event) => {
-      const {
-        name,
-        value,
-      } = event.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-      setForm(
-        (previous) => ({
-          ...previous,
+    setForm((previous) => ({
+      ...previous,
 
-          [name]:
-            value,
-        }),
-      );
+      [name]: value,
+    }));
 
-      if (error) {
-        setError("");
-      }
-    };
+    if (error) {
+      setError("");
+    }
+  };
 
   /* =======================================================
      SUBMIT
   ======================================================= */
 
-  const handleSubmit =
-    async (event) => {
-      event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-      if (submitting) {
-        return;
-      }
+    if (submitting) {
+      return;
+    }
 
-      setError("");
-      setSuccessMessage("");
+    setError("");
+    setSuccessMessage("");
 
-      const token =
-        localStorage.getItem(
-          "local_sewa_token",
-        );
+    const token = localStorage.getItem("local_sewa_token");
 
-      if (!token) {
-        setNeedsLogin(true);
+    if (!token) {
+      setNeedsLogin(true);
 
-        setError(
-          "Please login to your customer account first.",
-        );
+      setError("Please login to your customer account first.");
 
-        return;
-      }
+      return;
+    }
 
-      const businessName =
-        form.business_name.trim();
+    const businessName = form.business_name.trim();
 
-      const description =
-        form.business_description.trim();
+    const description = form.business_description.trim();
 
-      const category =
-        form.category.trim();
+    const category = form.category.trim();
 
-      const whatsapp =
-        normalizePhone(
-          form.whatsapp,
-        );
+    const whatsapp = normalizePhone(form.whatsapp);
 
-      const alternatePhone =
-        normalizePhone(
-          form.alternate_phone,
-        );
+    const alternatePhone = normalizePhone(form.alternate_phone);
 
-      const businessEmail =
-        form.business_email
-          .trim()
-          .toLowerCase();
+    const businessEmail = form.business_email.trim().toLowerCase();
 
-      /* ===================================================
+    /* ===================================================
          VALIDATION
       =================================================== */
 
-      if (
-        businessName.length <
-        2
-      ) {
-        setError(
-          "Please enter your business or service name.",
-        );
+    if (businessName.length < 2) {
+      setError("Please enter your business or service name.");
 
-        return;
-      }
+      return;
+    }
 
-      if (!category) {
-        setError(
-          "Please select your service category.",
-        );
+    if (!category) {
+      setError("Please select your service category.");
 
-        return;
-      }
+      return;
+    }
 
-      const experience =
-        form.experience_years ===
-        ""
-          ? 0
-          : Number(
-              form.experience_years,
-            );
+    const experience =
+      form.experience_years === "" ? 0 : Number(form.experience_years);
 
-      if (
-        !Number.isInteger(
-          experience,
-        ) ||
-        experience < 0 ||
-        experience > 80
-      ) {
-        setError(
-          "Experience must be between 0 and 80 years.",
-        );
+    if (!Number.isInteger(experience) || experience < 0 || experience > 80) {
+      setError("Experience must be between 0 and 80 years.");
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        whatsapp.length < 10 ||
-        whatsapp.length > 15
-      ) {
-        setError(
-          "Please enter a valid WhatsApp number.",
-        );
+    if (whatsapp.length < 10 || whatsapp.length > 15) {
+      setError("Please enter a valid WhatsApp number.");
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        alternatePhone &&
-        (
-          alternatePhone.length <
-            10 ||
-          alternatePhone.length >
-            15
-        )
-      ) {
-        setError(
-          "Please enter a valid alternate number.",
-        );
+    if (
+      alternatePhone &&
+      (alternatePhone.length < 10 || alternatePhone.length > 15)
+    ) {
+      setError("Please enter a valid alternate number.");
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        businessEmail &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-          businessEmail,
-        )
-      ) {
-        setError(
-          "Please enter a valid business email.",
-        );
+    if (businessEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(businessEmail)) {
+      setError("Please enter a valid business email.");
 
-        return;
-      }
+      return;
+    }
 
-      if (
-        !form.home_service &&
-        !form.shop_service
-      ) {
-        setError(
-          "Please select at least Home Service or Shop Service.",
-        );
+    if (!form.home_service && !form.shop_service) {
+      setError("Please select at least Home Service or Shop Service.");
 
-        return;
-      }
+      return;
+    }
 
-      setSubmitting(true);
+    setSubmitting(true);
 
-      try {
-        /* =================================================
+    try {
+      /* =================================================
            CREATE PROVIDER PROFILE
         ================================================= */
 
-        const response =
-          await fetch(
-            `${API_BASE_URL}/api/auth/provider/register`,
-            {
-              method: "POST",
+      const response = await fetch(
+        `${API_BASE_URL}/api/auth/provider/register`,
+        {
+          method: "POST",
 
-              headers: {
-                "Content-Type":
-                  "application/json",
+          headers: {
+            "Content-Type": "application/json",
 
-                Accept:
-                  "application/json",
+            Accept: "application/json",
 
-                Authorization:
-                  `Bearer ${token}`,
-              },
+            Authorization: `Bearer ${token}`,
+          },
 
-              body:
-                JSON.stringify({
-                  business_name:
-                    businessName,
+          body: JSON.stringify({
+            business_name: businessName,
 
-                  business_description:
-                    description ||
-                    null,
+            business_description: description || null,
 
-                  category,
+            category,
 
-                  experience_years:
-                    experience,
+            experience_years: experience,
 
-                  whatsapp,
+            whatsapp,
 
-                  alternate_phone:
-                    alternatePhone ||
-                    null,
+            alternate_phone: alternatePhone || null,
 
-                  business_email:
-                    businessEmail ||
-                    null,
+            business_email: businessEmail || null,
 
-                  home_service:
-                    form.home_service,
+            home_service: form.home_service,
 
-                  shop_service:
-                    form.shop_service,
-                }),
-            },
-          );
+            shop_service: form.shop_service,
+          }),
+        },
+      );
 
-        const data =
-          await response.json();
+      const data = await response.json();
 
-        if (
-          !response.ok ||
-          !data?.success
-        ) {
-          throw new Error(
-            data?.message ||
-              "Unable to create provider profile.",
-          );
-        }
+      if (!response.ok || !data?.success) {
+        throw new Error(data?.message || "Unable to create provider profile.");
+      }
 
-        /* =================================================
+      /* =================================================
            BACKEND RETURNS NEW TOKEN
            WITH PROVIDER ROLE
         ================================================= */
 
-        const newToken =
-          data.token ||
-          token;
+      const newToken = data.token || token;
 
-        localStorage.setItem(
-          "local_sewa_token",
-          newToken,
-        );
+      localStorage.setItem("local_sewa_token", newToken);
 
-        /* =================================================
+      /* =================================================
            FETCH UPDATED /ME
         ================================================= */
 
-        const meResponse =
-          await fetch(
-            `${API_BASE_URL}/api/auth/me`,
-            {
-              headers: {
-                Accept:
-                  "application/json",
+      const meResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
+        headers: {
+          Accept: "application/json",
 
-                Authorization:
-                  `Bearer ${newToken}`,
-              },
-            },
-          );
+          Authorization: `Bearer ${newToken}`,
+        },
+      });
 
-        const meData =
-          await meResponse.json();
+      const meData = await meResponse.json();
 
-        if (
-          !meResponse.ok ||
-          !meData?.success ||
-          !meData?.user
-        ) {
-          throw new Error(
-            "Provider account was created, but account information could not be refreshed.",
-          );
-        }
+      if (!meResponse.ok || !meData?.success || !meData?.user) {
+        throw new Error(
+          "Provider account was created, but account information could not be refreshed.",
+        );
+      }
 
-        /* =================================================
+      /* =================================================
            VERIFY PROVIDER ROLE
         ================================================= */
 
-        const roles =
-          Array.isArray(
-            meData.user.roles,
-          )
-            ? meData.user.roles
-            : [];
+      const roles = Array.isArray(meData.user.roles) ? meData.user.roles : [];
 
-        if (
-          !roles.includes(
-            "PROVIDER",
-          )
-        ) {
-          throw new Error(
-            "Provider role could not be activated.",
-          );
-        }
+      if (!roles.includes("PROVIDER")) {
+        throw new Error("Provider role could not be activated.");
+      }
 
-        /* =================================================
+      /* =================================================
            SAVE UPDATED USER
         ================================================= */
 
-        localStorage.setItem(
-          "local_sewa_user",
-          JSON.stringify(
-            meData.user,
-          ),
-        );
+      localStorage.setItem("local_sewa_user", JSON.stringify(meData.user));
 
-        localStorage.setItem(
-          "local_sewa_active_role",
-          "PROVIDER",
-        );
+      localStorage.setItem("local_sewa_active_role", "PROVIDER");
 
-        setSuccessMessage(
-          "Provider account activated successfully!",
-        );
+      setSuccessMessage("Provider account activated successfully!");
 
-        /* =================================================
+      /* =================================================
            DASHBOARD
         ================================================= */
 
-        setTimeout(() => {
-          navigate(
-            "/provider/dashboard",
-            {
-              replace: true,
-            },
-          );
-        }, 700);
-      } catch (
-        submitError
-      ) {
-        console.error(
-          "BECOME PROVIDER ERROR:",
-          submitError,
-        );
+      setTimeout(() => {
+        navigate("/provider/dashboard", {
+          replace: true,
+        });
+      }, 700);
+    } catch (submitError) {
+      console.error("BECOME PROVIDER ERROR:", submitError);
 
-        setError(
-          submitError?.message ||
-            "Unable to become a provider.",
-        );
-      } finally {
-        setSubmitting(false);
-      }
-    };
+      setError(submitError?.message || "Unable to become a provider.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   /* =======================================================
      PAGE LOADING
@@ -778,13 +535,7 @@ function ProviderRegisterPage() {
               text-[#16A34A]
             "
           >
-            <HugeiconsIcon
-              icon={
-                Briefcase01Icon
-              }
-              size={27}
-              strokeWidth={1.8}
-            />
+            <HugeiconsIcon icon={Briefcase01Icon} size={27} strokeWidth={1.8} />
           </div>
 
           <h2
@@ -806,11 +557,8 @@ function ProviderRegisterPage() {
               text-[#64748B]
             "
           >
-            First login to your
-            Local Sewa customer
-            account. Then you can
-            activate your service
-            provider profile.
+            First login to your Local Sewa customer account. Then you can
+            activate your service provider profile.
           </p>
 
           {error && (
@@ -848,14 +596,7 @@ function ProviderRegisterPage() {
             "
           >
             Login to Continue
-
-            <HugeiconsIcon
-              icon={
-                ArrowRight02Icon
-              }
-              size={17}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon icon={ArrowRight02Icon} size={17} strokeWidth={2} />
           </Link>
 
           <p
@@ -866,7 +607,6 @@ function ProviderRegisterPage() {
             "
           >
             New to Local Sewa?{" "}
-
             <Link
               to="/auth/customer/register"
               className="
@@ -927,13 +667,7 @@ function ProviderRegisterPage() {
               text-[#16A34A]
             "
           >
-            <HugeiconsIcon
-              icon={
-                Briefcase01Icon
-              }
-              size={27}
-              strokeWidth={1.8}
-            />
+            <HugeiconsIcon icon={Briefcase01Icon} size={27} strokeWidth={1.8} />
           </div>
 
           <h2
@@ -962,14 +696,9 @@ function ProviderRegisterPage() {
           <button
             type="button"
             onClick={() => {
-              localStorage.setItem(
-                "local_sewa_active_role",
-                "PROVIDER",
-              );
+              localStorage.setItem("local_sewa_active_role", "PROVIDER");
 
-              navigate(
-                "/provider/dashboard",
-              );
+              navigate("/provider/dashboard");
             }}
             className="
               mt-6
@@ -988,14 +717,7 @@ function ProviderRegisterPage() {
             "
           >
             Go to Provider Dashboard
-
-            <HugeiconsIcon
-              icon={
-                ArrowRight02Icon
-              }
-              size={17}
-              strokeWidth={2}
-            />
+            <HugeiconsIcon icon={ArrowRight02Icon} size={17} strokeWidth={2} />
           </button>
         </div>
       </main>
@@ -1068,12 +790,7 @@ function ProviderRegisterPage() {
             hover:text-[#15803D]
           "
         >
-          <HugeiconsIcon
-            icon={ArrowLeft01Icon}
-            size={16}
-            strokeWidth={1.8}
-          />
-
+          <HugeiconsIcon icon={ArrowLeft01Icon} size={16} strokeWidth={1.8} />
           Back
         </Link>
 
@@ -1125,9 +842,7 @@ function ProviderRegisterPage() {
               "
             >
               <HugeiconsIcon
-                icon={
-                  Briefcase01Icon
-                }
+                icon={Briefcase01Icon}
                 size={24}
                 strokeWidth={1.8}
               />
@@ -1163,8 +878,7 @@ function ProviderRegisterPage() {
                 text-[#64748B]
               "
             >
-              Add your business details
-              and start offering services.
+              Add your business details and start offering services.
             </p>
           </div>
 
@@ -1201,10 +915,7 @@ function ProviderRegisterPage() {
                   text-[#15803D]
                 "
               >
-                <HugeiconsIcon
-                  icon={UserIcon}
-                  size={18}
-                />
+                <HugeiconsIcon icon={UserIcon} size={18} />
               </div>
 
               <div>
@@ -1233,9 +944,7 @@ function ProviderRegisterPage() {
           {/* FORM */}
 
           <form
-            onSubmit={
-              handleSubmit
-            }
+            onSubmit={handleSubmit}
             className="
               space-y-4
               px-5
@@ -1311,21 +1020,15 @@ function ProviderRegisterPage() {
                 "
               >
                 <HugeiconsIcon
-                  icon={
-                    Briefcase01Icon
-                  }
+                  icon={Briefcase01Icon}
                   size={18}
                   className="text-[#94A3B8]"
                 />
 
                 <input
                   name="business_name"
-                  value={
-                    form.business_name
-                  }
-                  onChange={
-                    handleChange
-                  }
+                  value={form.business_name}
+                  onChange={handleChange}
                   placeholder="Example: Dadu Electrical Services"
                   className="
                     min-w-0
@@ -1355,12 +1058,8 @@ function ProviderRegisterPage() {
 
               <select
                 name="category"
-                value={
-                  form.category
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.category}
+                onChange={handleChange}
                 className="
                   h-12
                   w-full
@@ -1376,26 +1075,13 @@ function ProviderRegisterPage() {
                   focus:ring-[#DCFCE7]
                 "
               >
-                <option value="">
-                  Select category
-                </option>
+                <option value="">Select category</option>
 
-                {categories.map(
-                  (category) => (
-                    <option
-                      key={
-                        category.id
-                      }
-                      value={
-                        category.name
-                      }
-                    >
-                      {
-                        category.name
-                      }
-                    </option>
-                  ),
-                )}
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -1416,12 +1102,8 @@ function ProviderRegisterPage() {
 
               <textarea
                 name="business_description"
-                value={
-                  form.business_description
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.business_description}
+                onChange={handleChange}
                 rows={4}
                 placeholder="Tell customers about your work..."
                 className="
@@ -1461,12 +1143,8 @@ function ProviderRegisterPage() {
                 type="number"
                 min="0"
                 max="80"
-                value={
-                  form.experience_years
-                }
-                onChange={
-                  handleChange
-                }
+                value={form.experience_years}
+                onChange={handleChange}
                 placeholder="Example: 3"
                 className="
                   h-12
@@ -1522,26 +1200,13 @@ function ProviderRegisterPage() {
                 <input
                   name="whatsapp"
                   type="tel"
-                  value={
-                    form.whatsapp
-                  }
-                  onChange={(
-                    event,
-                  ) => {
-                    setForm(
-                      (
-                        previous,
-                      ) => ({
-                        ...previous,
+                  value={form.whatsapp}
+                  onChange={(event) => {
+                    setForm((previous) => ({
+                      ...previous,
 
-                        whatsapp:
-                          normalizePhone(
-                            event
-                              .target
-                              .value,
-                          ),
-                      }),
-                    );
+                      whatsapp: normalizePhone(event.target.value),
+                    }));
                   }}
                   className="
                     min-w-0
@@ -1591,12 +1256,8 @@ function ProviderRegisterPage() {
                 <input
                   name="business_email"
                   type="email"
-                  value={
-                    form.business_email
-                  }
-                  onChange={
-                    handleChange
-                  }
+                  value={form.business_email}
+                  onChange={handleChange}
                   className="
                     min-w-0
                     flex-1
@@ -1646,24 +1307,13 @@ function ProviderRegisterPage() {
                 >
                   <input
                     type="checkbox"
-                    checked={
-                      form.home_service
-                    }
-                    onChange={(
-                      event,
-                    ) => {
-                      setForm(
-                        (
-                          previous,
-                        ) => ({
-                          ...previous,
+                    checked={form.home_service}
+                    onChange={(event) => {
+                      setForm((previous) => ({
+                        ...previous,
 
-                          home_service:
-                            event
-                              .target
-                              .checked,
-                        }),
-                      );
+                        home_service: event.target.checked,
+                      }));
                     }}
                     className="
                       h-4
@@ -1671,7 +1321,6 @@ function ProviderRegisterPage() {
                       accent-[#16A34A]
                     "
                   />
-
                   Home Service
                 </label>
 
@@ -1692,24 +1341,13 @@ function ProviderRegisterPage() {
                 >
                   <input
                     type="checkbox"
-                    checked={
-                      form.shop_service
-                    }
-                    onChange={(
-                      event,
-                    ) => {
-                      setForm(
-                        (
-                          previous,
-                        ) => ({
-                          ...previous,
+                    checked={form.shop_service}
+                    onChange={(event) => {
+                      setForm((previous) => ({
+                        ...previous,
 
-                          shop_service:
-                            event
-                              .target
-                              .checked,
-                        }),
-                      );
+                        shop_service: event.target.checked,
+                      }));
                     }}
                     className="
                       h-4
@@ -1717,7 +1355,6 @@ function ProviderRegisterPage() {
                       accent-[#16A34A]
                     "
                   />
-
                   Shop Service
                 </label>
               </div>
@@ -1727,9 +1364,7 @@ function ProviderRegisterPage() {
 
             <button
               type="submit"
-              disabled={
-                submitting
-              }
+              disabled={submitting}
               className="
                 flex
                 h-12
@@ -1761,17 +1396,13 @@ function ProviderRegisterPage() {
                       border-t-white
                     "
                   />
-
                   Creating Provider Profile...
                 </>
               ) : (
                 <>
                   Become a Provider
-
                   <HugeiconsIcon
-                    icon={
-                      ArrowRight02Icon
-                    }
+                    icon={ArrowRight02Icon}
                     size={17}
                     strokeWidth={2}
                   />
